@@ -20,6 +20,8 @@ import com.example.shoppinglist.entities.ShoppingListNames
 
 abstract class MainDataBase : RoomDatabase() {
 
+    abstract fun getDao(): Dao // для получения доступа к интерфейсу Dao
+
     companion object {
         @Volatile
         private var INSTANCE: MainDataBase? = null
