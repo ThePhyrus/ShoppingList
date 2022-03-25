@@ -23,7 +23,7 @@ data class ShoppingListNames(
     val allItemCounter: Int,
 
     @ColumnInfo(name = "checkedItemsCounter") // счётчик отмеченных (купленных) позиций (checkBox)
-    val checkedItemsCounter: Int,
+    val checkedItemsCounter: Int, //todo подправить комментарий (см. ShoppingListItem.kt)
 
     @ColumnInfo(name = "itemsIds") // id всех элементов добавленных в список
     val itemsIds: String,
