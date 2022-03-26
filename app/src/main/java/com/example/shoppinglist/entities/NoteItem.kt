@@ -12,7 +12,7 @@ data class NoteItem(
     //todo подумать, какие ещё элементы можно добавить в таблицу заметки
 
     @PrimaryKey(autoGenerate = true) // для автосоздания уникальных id заметок
-    val name: Int?,
+    val id: Int?,
 
     @ColumnInfo(name = "title") // название заметки
     val title: String,
