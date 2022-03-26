@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityMainBinding
+import com.example.shoppinglist.fragments.FragmentManager
+import com.example.shoppinglist.fragments.NoteFragment
 
 
 private const val TAG: String = "@@@"
@@ -27,7 +29,7 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "settings")
                 }
                 R.id.notes -> {
-                    Log.d(TAG, "notes")
+                    FragmentManager.setFragment(NoteFragment.newInstance(), this)
                 }
                 R.id.shop_list -> {
                     Log.d(TAG, "shop_list")
