@@ -55,19 +55,16 @@ class NoteFragment : BaseFragment(), NoteAdapter.Listener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // функция запустится когда все вью будут созданны
         super.onViewCreated(view, savedInstanceState)
-        // только теперь можно запустить функцию initRcView
         initRcView()
         observer()
 
     }
 
     private fun initRcView() = with(binding) {
-        // здесь инициализирую мой ресайкл вью и адаптер
-        rcViewNote.layoutManager = LinearLayoutManager(activity) // заметки будут идти вертикально
-        adapter = NoteAdapter(this@NoteFragment) // инициализация адаптера
-        rcViewNote.adapter = adapter // передаём адаптер куда следует
+        rcViewNote.layoutManager = LinearLayoutManager(activity)
+        adapter = NoteAdapter(this@NoteFragment)
+        rcViewNote.adapter = adapter
     }
 
     private fun observer() { //FIXME ???
@@ -81,24 +78,39 @@ class NoteFragment : BaseFragment(), NoteAdapter.Listener {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
-                mainViewModel.insertNote(it.data?.getSerializableExtra(NEW_NOTE_KEY) as NoteItem)
+                val editState = it.data?.getStringExtra(EDIT_STATE_KEY)
+                if (editState == "update") {
+                    mainViewModel.updateNote(it.data?.getSerializableExtra(NEW_NOTE_KEY) as NoteItem)
+                } else {
+                    mainViewModel.insertNote(it.data?.getSerializableExtra(NEW_NOTE_KEY) as NoteItem)
+                }
             }
         }
     }
 
-    companion object { // нужен, чтобы сделать синглтон (будет только одна INSTANCE фрагмента)
+
+    override fun deleteItem(id: Int) {
+        mainViewModel.deleteNote(id)
+    }
+
+    override fun onClickItem(note: NoteItem) {
+        val intent = Intent(activity, NewNoteActivity::class.java).apply {
+            putExtra(NEW_NOTE_KEY, note)
+        }
+        editLauncher.launch(intent)
+    }
+
+    companion object {
         const val NEW_NOTE_KEY = "new_note_key"
+        const val EDIT_STATE_KEY = "edit_state_key"
 
         @JvmStatic
         fun newInstance() = NoteFragment()
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    override fun deleteItem(id: Int) {
-        mainViewModel.deleteNote(id)
     }
 }

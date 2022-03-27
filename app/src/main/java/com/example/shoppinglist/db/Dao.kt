@@ -3,6 +3,7 @@ package com.example.shoppinglist.db
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.example.shoppinglist.entities.NoteItem
 import kotlinx.coroutines.flow.Flow
 
@@ -14,13 +15,15 @@ interface Dao {
     или считывания данных.
      */
 
-    @Query("SELECT * FROM note_list") // синтаксис базы данных SQLite
-    fun getAllNotes(): Flow<List<NoteItem>> // функция для считывания, выдаст список с заметками
+    @Query("SELECT * FROM note_list")
+    fun getAllNotes(): Flow<List<NoteItem>>
 
-    @Query("DELETE FROM note_list WHERE id IS :id") // синтаксис базы данных SQLite
-    suspend fun deleteNote(id: Int) // удалить элемент по id
+    @Query("DELETE FROM note_list WHERE id IS :id")
+    suspend fun deleteNote(id: Int)
 
-    @Insert // аннотация для функции записи данных в базу
-    // "suspend" прописывается для того, чтобы запускать функцию внутри корутины
-    suspend fun insertNote(note: NoteItem) // в функцию передаётся entity для заметок (NoteItem)
+    @Insert
+    suspend fun insertNote(note: NoteItem)
+
+    @Update
+    suspend fun updateNote(note: NoteItem)
 }

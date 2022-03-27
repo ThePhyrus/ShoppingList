@@ -20,12 +20,14 @@ class MainViewModel(database: MainDataBase) : ViewModel() {
 
 
     fun insertNote(note: NoteItem) = viewModelScope.launch {
-        // функция для добавления заметки в базу (через корутину)
         dao.insertNote(note)
     }
 
+    fun updateNote(note: NoteItem) = viewModelScope.launch {
+        dao.updateNote(note)
+    }
+
     fun deleteNote(id: Int) = viewModelScope.launch {
-        // функция для добавления заметки в базу (через корутину)
         dao.deleteNote(id)
     }
 
