@@ -17,6 +17,9 @@ interface Dao {
     @Query("SELECT * FROM note_list") // синтаксис базы данных SQLite
     fun getAllNotes(): Flow<List<NoteItem>> // функция для считывания, выдаст список с заметками
 
+    @Query("DELETE FROM note_list WHERE id IS :id") // синтаксис базы данных SQLite
+    suspend fun deleteNote(id: Int) // удалить элемент по id
+
     @Insert // аннотация для функции записи данных в базу
     // "suspend" прописывается для того, чтобы запускать функцию внутри корутины
     suspend fun insertNote(note: NoteItem) // в функцию передаётся entity для заметок (NoteItem)

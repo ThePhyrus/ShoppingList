@@ -10,7 +10,8 @@ import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.NoteListItemBinding
 import com.example.shoppinglist.entities.NoteItem
 
-class NoteAdapter : ListAdapter<NoteItem, NoteAdapter.ItemHolder>(ItemComparator()) {
+class NoteAdapter(private val listener: Listener) :
+    ListAdapter<NoteItem, NoteAdapter.ItemHolder>(ItemComparator()) {
 
     /*
     Примерное описание работы класса NoteAdapter.kt (recycler view adapter):
@@ -38,7 +39,7 @@ class NoteAdapter : ListAdapter<NoteItem, NoteAdapter.ItemHolder>(ItemComparator
         /*
         функция заполняет разметку информацией из базы данных
          */
-        holder.setData(getItem(position))
+        holder.setData(getItem(position), listener)
     }
 
     class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -52,11 +53,14 @@ class NoteAdapter : ListAdapter<NoteItem, NoteAdapter.ItemHolder>(ItemComparator
 
         private val binding = NoteListItemBinding.bind(view)
 
-        fun setData(note: NoteItem) = with(binding) {
+        fun setData(note: NoteItem, listener: Listener) = with(binding) {
 
             tvTitle.text = note.title
             tvDescription.text = note.content
             tvTime.text = note.time
+            imDelete.setOnClickListener {
+                listener.deleteItem(note.id!!)
+            }
         }
 
         companion object {// для упрощения инициализации ItemHolder
@@ -83,4 +87,9 @@ class NoteAdapter : ListAdapter<NoteItem, NoteAdapter.ItemHolder>(ItemComparator
             return oldItem == newItem // полное (общее) сравнение. Сравнивает весь контент элементов
         }
     }
+
+    interface Listener {
+        fun deleteItem(id: Int)
+    }
+
 }

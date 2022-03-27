@@ -24,6 +24,11 @@ class MainViewModel(database: MainDataBase) : ViewModel() {
         dao.insertNote(note)
     }
 
+    fun deleteNote(id: Int) = viewModelScope.launch {
+        // функция для добавления заметки в базу (через корутину)
+        dao.deleteNote(id)
+    }
+
 
     class MainViewModelFactory(val database: MainDataBase) : ViewModelProvider.Factory {
         // Этот класс будет иницилизировать MainViewModel (всегда одинаково пишется??)

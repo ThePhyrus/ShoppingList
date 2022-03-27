@@ -25,7 +25,7 @@ import com.example.shoppinglist.entities.NoteItem
 
 private const val TAG: String = "@@@"
 
-class NoteFragment : BaseFragment() {
+class NoteFragment : BaseFragment(), NoteAdapter.Listener {
 
     private var _binding: FragmentNoteBinding? = null //FIXME не будет ли утечки?
     private val binding: FragmentNoteBinding get() = _binding!!
@@ -66,14 +66,14 @@ class NoteFragment : BaseFragment() {
     private fun initRcView() = with(binding) {
         // здесь инициализирую мой ресайкл вью и адаптер
         rcViewNote.layoutManager = LinearLayoutManager(activity) // заметки будут идти вертикально
-        adapter = NoteAdapter() // инициализация адаптера
+        adapter = NoteAdapter(this@NoteFragment) // инициализация адаптера
         rcViewNote.adapter = adapter // передаём адаптер куда следует
     }
 
     private fun observer() { //FIXME ???
-        mainViewModel.allNotes.observe(viewLifecycleOwner, {
+        mainViewModel.allNotes.observe(viewLifecycleOwner) {
             adapter.submitList(it)
-        })
+        }
     }
 
     private fun onEditResult() {
@@ -96,5 +96,9 @@ class NoteFragment : BaseFragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun deleteItem(id: Int) {
+        mainViewModel.deleteNote(id)
     }
 }
