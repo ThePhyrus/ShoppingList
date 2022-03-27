@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "shop_list")
                 }
                 R.id.new_item -> {
+                    FragmentManager.currentFrag?.onClickNew()
                     Log.d(TAG, "new_item")
                 }
             }
