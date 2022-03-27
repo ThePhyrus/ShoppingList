@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.example.shoppinglist.R
+import com.example.shoppinglist.activities.MainApp
 import com.example.shoppinglist.databinding.FragmentNoteBinding
+import com.example.shoppinglist.db.MainViewModel
 
 //todo добавить описание работы класса
 class NoteFragment : BaseFragment() {
@@ -14,8 +17,16 @@ class NoteFragment : BaseFragment() {
     private var _binding: FragmentNoteBinding? = null //FIXME не будет ли утечки?
     private val binding: FragmentNoteBinding get() = _binding!!
 
+    private val mainViewModel: MainViewModel by activityViewModels {
+        MainViewModel.MainViewModelFactory((context?.applicationContext as MainApp).database)
+    }
+
     override fun onClickNew() {
 
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
