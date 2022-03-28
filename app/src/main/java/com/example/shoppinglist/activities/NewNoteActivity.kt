@@ -1,8 +1,11 @@
 package com.example.shoppinglist.activities
 
 import android.content.Intent
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Spannable
+import android.text.style.StyleSpan
 import android.view.Menu
 import android.view.MenuItem
 import com.example.shoppinglist.R
@@ -26,15 +29,15 @@ class NewNoteActivity : AppCompatActivity() {
 
     private fun getNote() {
         val serialisedNote = intent.getSerializableExtra(NoteFragment.NEW_NOTE_KEY)
-        if (serialisedNote!= null){
+        if (serialisedNote != null) {
             note = serialisedNote as NoteItem
             fillNote()
         }
     }
 
     private fun fillNote() = with(binding) {
-            edTitle.setText(note?.title)
-            edDescription.setText(note?.content)
+        edTitle.setText(note?.title)
+        edDescription.setText(note?.content)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -47,13 +50,30 @@ class NewNoteActivity : AppCompatActivity() {
             setMainResult()
         } else if (item.itemId == android.R.id.home) {
             finish()
+        } else if (item.itemId == R.id.id_bold) {
+            setBoldForSelectedText()
         }
         return super.onOptionsItemSelected(item)
     }
 
+    private fun setBoldForSelectedText() = with(binding) {
+        val startPos = edDescription.selectionStart
+        val endPos = edDescription.selectionEnd
+        val styles = edDescription.text.getSpans(startPos, endPos, StyleSpan::class.java)
+        var boldStyle: StyleSpan? = null
+        if (styles.isNotEmpty()) {
+            edDescription.text.removeSpan(styles[0])
+        } else {
+            boldStyle = StyleSpan(Typeface.BOLD)
+        }
+        edDescription.text.setSpan(boldStyle, startPos, endPos, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        edDescription.text.trim()
+        edDescription.setSelection(startPos)
+    }
+
     private fun setMainResult() {
         var editState = "new"
-        val tempNote:NoteItem? = if (note == null){
+        val tempNote: NoteItem? = if (note == null) {
             createNewNote()
         } else {
             editState = "update"
