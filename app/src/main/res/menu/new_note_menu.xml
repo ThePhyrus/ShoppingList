@@ -4,7 +4,7 @@
     <item
         android:id="@+id/id_save"
         android:icon="@drawable/ic_save"
-        android:orderInCategory="2"
+        android:orderInCategory="3"
         android:title="Save"
         app:showAsAction="ifRoom" />
 
@@ -13,5 +13,12 @@
         android:icon="@drawable/ic_bold"
         android:orderInCategory="1"
         android:title="Bold"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/id_color"
+        android:icon="@drawable/ic_color"
+        android:orderInCategory="2"
+        android:title="Color"
         app:showAsAction="ifRoom" />
 </menu>
