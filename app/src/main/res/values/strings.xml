@@ -11,4 +11,6 @@
 
     <string name="new_list">New list name</string>
     <string name="list_name">Enter list name</string>
+
+    <string name="create_list">Create list</string>
 </resources>

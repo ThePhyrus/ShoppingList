@@ -8,6 +8,7 @@ import com.example.shoppinglist.databinding.ActivityMainBinding
 import com.example.shoppinglist.dialogs.NewListDialog
 import com.example.shoppinglist.fragments.FragmentManager
 import com.example.shoppinglist.fragments.NoteFragment
+import com.example.shoppinglist.fragments.ShopListNamesFragment
 
 
 private const val TAG: String = "@@@"
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        FragmentManager.setFragment(ShopListNamesFragment.newInstance(), this)
         setBottomNavListener()
     }
 
@@ -33,11 +35,10 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
                     FragmentManager.setFragment(NoteFragment.newInstance(), this)
                 }
                 R.id.shop_list -> {
-                    Log.d(TAG, "shop_list")
+                    FragmentManager.setFragment(ShopListNamesFragment.newInstance(), this)
                 }
                 R.id.new_item -> {
-//                    FragmentManager.currentFrag?.onClickNew()
-                    NewListDialog.showDialog(this, this)
+                    FragmentManager.currentFrag?.onClickNew()
                 }
             }
             true
