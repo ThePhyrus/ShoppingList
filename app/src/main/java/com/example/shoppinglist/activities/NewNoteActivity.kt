@@ -12,6 +12,7 @@ import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityNewNoteBinding
 import com.example.shoppinglist.entities.NoteItem
 import com.example.shoppinglist.fragments.NoteFragment
+import com.example.shoppinglist.utils.HtmlManager
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,7 +38,7 @@ class NewNoteActivity : AppCompatActivity() {
 
     private fun fillNote() = with(binding) {
         edTitle.setText(note?.title)
-        edDescription.setText(note?.content)
+        edDescription.setText(HtmlManager.getFromHtml(note?.content!!))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -68,7 +69,7 @@ class NewNoteActivity : AppCompatActivity() {
         }
         edDescription.text.setSpan(boldStyle, startPos, endPos, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         edDescription.text.trim()
-        edDescription.setSelection(startPos)
+        edDescription.setSelection(endPos) //FIXME was startPos
     }
 
     private fun setMainResult() {
@@ -91,15 +92,15 @@ class NewNoteActivity : AppCompatActivity() {
     private fun updateNote(): NoteItem? = with(binding) {
         return note?.copy(
             title = edTitle.text.toString(),
-            content = edDescription.text.toString()
+            content = HtmlManager.toHtml(edDescription.text)
         )
     }
 
-    private fun createNewNote(): NoteItem { // функция выдаёт заполненную заметку
+    private fun createNewNote(): NoteItem = with(binding) { // функция выдаёт заполненную заметку
         return NoteItem(
             null,
-            binding.edTitle.text.toString(),
-            binding.edDescription.text.toString(),
+            edTitle.text.toString(),
+            HtmlManager.toHtml(edDescription.text),
             getCurrentTime(),
             ""
         )
