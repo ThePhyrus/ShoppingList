@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -32,9 +33,10 @@ class NewNoteActivity : AppCompatActivity() {
         binding = ActivityNewNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
         actionBarSettings()
+        init()
         getNote()
         onClickColorPicker()
-        init()
+        actionMenuCallback() //FIXME action menu всё равно появляется, если назать на свободное место
     }
 
     private fun onClickColorPicker() = with(binding) {
@@ -196,5 +198,29 @@ class NewNoteActivity : AppCompatActivity() {
 
         })
         binding.colorPicker.startAnimation(openAnim)
+    }
+
+    private fun actionMenuCallback() {
+        //FIXME action menu всё равно появляется, если назать на свободное место
+        val actionMenuCallback = object : ActionMode.Callback {
+            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                menu?.clear()
+                return true
+            }
+
+            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                menu?.clear()
+                return true
+            }
+
+            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+                return true
+            }
+
+            override fun onDestroyActionMode(mode: ActionMode?) {
+
+            }
+        }
+        binding.edDescription.customSelectionActionModeCallback = actionMenuCallback
     }
 }
