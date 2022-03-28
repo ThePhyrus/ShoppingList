@@ -5,13 +5,14 @@ import android.os.Bundle
 import android.util.Log
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityMainBinding
+import com.example.shoppinglist.dialogs.NewListDialog
 import com.example.shoppinglist.fragments.FragmentManager
 import com.example.shoppinglist.fragments.NoteFragment
 
 
 private const val TAG: String = "@@@"
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NewListDialog.Listener {
 
     lateinit var binding: ActivityMainBinding
 
@@ -35,11 +36,15 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "shop_list")
                 }
                 R.id.new_item -> {
-                    FragmentManager.currentFrag?.onClickNew()
-                    Log.d(TAG, "new_item")
+//                    FragmentManager.currentFrag?.onClickNew()
+                    NewListDialog.showDialog(this, this)
                 }
             }
             true
         }
+    }
+
+    override fun onClick(name: String) {
+        Log.d(TAG, "works $name")
     }
 }
