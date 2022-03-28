@@ -12,10 +12,12 @@ import com.example.shoppinglist.activities.MainApp
 import com.example.shoppinglist.databinding.FragmentShopListNamesBinding
 import com.example.shoppinglist.db.MainViewModel
 import com.example.shoppinglist.dialogs.NewListDialog
+import com.example.shoppinglist.entities.ShoppingListName
+import com.example.shoppinglist.utils.TimeManager
 
 private const val TAG: String = "@@@"
 
-class ShopListNamesFragment : BaseFragment()  {
+class ShopListNamesFragment : BaseFragment() {
 
     private var _binding: FragmentShopListNamesBinding? = null //FIXME не будет ли утечки?
     private val binding: FragmentShopListNamesBinding get() = _binding!!
@@ -26,11 +28,18 @@ class ShopListNamesFragment : BaseFragment()  {
     }
 
     override fun onClickNew() {
-        NewListDialog.showDialog(activity as AppCompatActivity, object : NewListDialog.Listener{
+        NewListDialog.showDialog(activity as AppCompatActivity, object : NewListDialog.Listener {
             override fun onClick(name: String) {
-                Log.d(TAG, "onClick: name: $name")
+                val shopListName = ShoppingListName(
+                    null,
+                    name,
+                    TimeManager.getCurrentTime(),
+                    0,
+                    0,
+                    ""
+                )
+                mainViewModel.insertShopListName(shopListName)
             }
-
         })
     }
 
@@ -58,11 +67,10 @@ class ShopListNamesFragment : BaseFragment()  {
     }
 
     private fun observer() { //FIXME ???
-        mainViewModel.allNotes.observe(viewLifecycleOwner) {
+        mainViewModel.allShopListNames.observe(viewLifecycleOwner) {
 
         }
     }
-
 
 
     companion object {
