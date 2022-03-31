@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.activities.MainApp
 import com.example.shoppinglist.databinding.FragmentShopListNamesBinding
 import com.example.shoppinglist.db.MainViewModel
+import com.example.shoppinglist.db.ShopListNamesAdapter
 import com.example.shoppinglist.dialogs.NewListDialog
 import com.example.shoppinglist.entities.ShoppingListName
 import com.example.shoppinglist.utils.TimeManager
@@ -21,6 +23,8 @@ class ShopListNamesFragment : BaseFragment() {
 
     private var _binding: FragmentShopListNamesBinding? = null //FIXME не будет ли утечки?
     private val binding: FragmentShopListNamesBinding get() = _binding!!
+
+    private lateinit var adapter: ShopListNamesAdapter
 
 
     private val mainViewModel: MainViewModel by activityViewModels {
@@ -63,12 +67,14 @@ class ShopListNamesFragment : BaseFragment() {
     }
 
     private fun initRcView() = with(binding) {
-
+        myRcView.layoutManager = LinearLayoutManager(activity)
+        adapter = ShopListNamesAdapter()
+        myRcView.adapter = adapter
     }
 
     private fun observer() { //FIXME ???
         mainViewModel.allShopListNames.observe(viewLifecycleOwner) {
-
+            adapter.submitList(it)
         }
     }
 

@@ -5,7 +5,7 @@
     <string name="shop_list">Shop list</string>
     <string name="new_item">New</string>
 
-    <string name="title_hint">Title</string>
+    <string name="note_title_hint">Title</string>
     <string name="description_hint">Description</string>
     <string name="note_fragment">note fragment</string>
 

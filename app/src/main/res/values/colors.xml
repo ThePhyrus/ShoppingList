@@ -16,4 +16,6 @@
     <color name="picker_black">#000000</color>
     <color name="picker_yellow">#D6FD00</color>
     <color name="picker_orange">#EC8507</color>
+    <color name="fragment_note_background">#A6A4A4</color>
+    <color name="activity_new_note_background">#A3D124</color>
 </resources>

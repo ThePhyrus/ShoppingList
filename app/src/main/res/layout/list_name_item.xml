@@ -3,102 +3,100 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_half">
+
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="0dp"
+        android:id="@+id/cardViewList"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="22dp"
-        android:layout_marginEnd="3dp"
-        app:cardCornerRadius="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="@dimen/radius_double"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintListCard"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="5dp">
+            android:padding="@dimen/padding_mini">
 
             <TextView
-                android:id="@+id/tvListName"
+                android:id="@+id/tv_list_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:layout_margin="@dimen/margin_mini"
+                android:padding="@dimen/padding_half"
+                android:text="List title is empty"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/list_title_text_size"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvTime"
+                android:id="@+id/tvListCreatingTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textSize="12sp" />
+                android:layout_margin="@dimen/margin_mini"
+                android:padding="@dimen/padding_half"
+                android:text="No description"
+                android:textSize="@dimen/date_indication_text_size"
+                app:layout_constraintEnd_toEndOf="@+id/tv_list_name"
+                app:layout_constraintStart_toStartOf="@+id/tv_list_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_list_name" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <ImageButton
-        android:id="@+id/imbDeleteShopList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:alpha="0.8"
-        android:backgroundTint="#EC6161"
-        android:elevation="10"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
-        app:layout_constraintEnd_toEndOf="@+id/cardView"
-        app:layout_constraintTop_toTopOf="@+id/cardView"
-        app:srcCompat="@drawable/ic_delete_list" />
-
-    <ImageButton
-        android:id="@+id/imbEditShopList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:alpha="0.8"
-        android:backgroundTint="#13A315"
-        android:elevation="10"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
-        app:layout_constraintEnd_toStartOf="@+id/imbDeleteShopList"
-        app:layout_constraintTop_toTopOf="@+id/cardView"
-        app:srcCompat="@drawable/ic_edit_list" />
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="6dp"
-        android:backgroundTint="#5D77D1"
-        app:cardCornerRadius="4dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imbEditShopList"
-        app:layout_constraintEnd_toStartOf="@+id/imbEditShopList"
-        app:layout_constraintTop_toTopOf="@+id/imbEditShopList">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvCounter"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_margin="@dimen/margin"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvProgressCounter"
+                app:layout_constraintEnd_toStartOf="@+id/tvProgressCounter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvProgressCounter" />
+
+            <ImageButton
+                android:id="@+id/btnDeleteList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin"
+                android:backgroundTint="@color/picker_red"
+                android:minHeight="@dimen/min_height"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvListCreatingTime"
+                app:srcCompat="@drawable/ic_delete_list" />
+
+            <ImageButton
+                android:id="@+id/btnEditList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/picker_green"
+                android:minHeight="@dimen/min_height"
+                app:layout_constraintBottom_toBottomOf="@+id/btnDeleteList"
+                app:layout_constraintEnd_toStartOf="@+id/btnDeleteList"
+                app:layout_constraintTop_toTopOf="@+id/btnDeleteList"
+                app:srcCompat="@drawable/ic_edit_list" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvProgressCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/margin_half"
+                android:gravity="center"
+                android:padding="@dimen/padding_half"
                 android:text="0/0"
-                android:textColor="@color/white" />
-        </LinearLayout>
+                android:textColor="@color/black"
+                android:textSize="@dimen/progress_counter_text_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/btnEditList"
+                app:layout_constraintEnd_toStartOf="@+id/btnEditList"
+                app:layout_constraintTop_toTopOf="@+id/btnEditList" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
