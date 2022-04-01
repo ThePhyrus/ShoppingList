@@ -12,6 +12,7 @@ import com.example.shoppinglist.entities.NoteItem
 import com.example.shoppinglist.entities.ShoppingListName
 import com.example.shoppinglist.utils.HtmlManager
 
+
 class ShopListNamesAdapter() :
     ListAdapter<ShoppingListName, ShopListNamesAdapter.ItemHolder>(ItemComparator()) {
 
