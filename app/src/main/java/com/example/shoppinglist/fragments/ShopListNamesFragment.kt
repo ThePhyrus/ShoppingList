@@ -2,7 +2,6 @@ package com.example.shoppinglist.fragments
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.activities.MainApp
 import com.example.shoppinglist.databinding.FragmentShopListNamesBinding
 import com.example.shoppinglist.db.MainViewModel
-import com.example.shoppinglist.db.ShopListNamesAdapter
+import com.example.shoppinglist.db.ShopListNameAdapter
 import com.example.shoppinglist.dialogs.NewListDialog
 import com.example.shoppinglist.entities.ShoppingListName
 import com.example.shoppinglist.utils.TimeManager
@@ -24,7 +23,7 @@ class ShopListNamesFragment : BaseFragment() {
     private var _binding: FragmentShopListNamesBinding? = null //FIXME не будет ли утечки?
     private val binding: FragmentShopListNamesBinding get() = _binding!!
 
-    private lateinit var adapter: ShopListNamesAdapter
+    private lateinit var adapter: ShopListNameAdapter
 
 
     private val mainViewModel: MainViewModel by activityViewModels {
@@ -67,12 +66,12 @@ class ShopListNamesFragment : BaseFragment() {
     }
 
     private fun initRcView() = with(binding) {
-        myRcView.layoutManager = LinearLayoutManager(activity)
-        adapter = ShopListNamesAdapter()
-        myRcView.adapter = adapter
+        rcView.layoutManager = LinearLayoutManager(activity)
+        adapter= ShopListNameAdapter()
+        rcView.adapter = adapter
     }
 
-    private fun observer() { //FIXME ???
+    private fun observer() {
         mainViewModel.allShopListNames.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
