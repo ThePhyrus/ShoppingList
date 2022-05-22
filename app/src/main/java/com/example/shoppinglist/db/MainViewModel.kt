@@ -37,6 +37,10 @@ class MainViewModel(database: MainDataBase) : ViewModel() {
         dao.deleteNote(id)
     }
 
+    fun deleteShopListName(id: Int) = viewModelScope.launch {
+        dao.deleteShopListName(id)
+    }
+
 
     class MainViewModelFactory(val database: MainDataBase) : ViewModelProvider.Factory {
         // Этот класс будет иницилизировать MainViewModel (всегда одинаково пишется??)

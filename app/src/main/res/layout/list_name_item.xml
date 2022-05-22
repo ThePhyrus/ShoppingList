@@ -60,7 +60,7 @@
                 app:layout_constraintTop_toTopOf="@+id/tvProgressCounter" />
 
             <ImageButton
-                android:id="@+id/btnDeleteList"
+                android:id="@+id/imDeleteList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin"
@@ -72,14 +72,14 @@
                 app:srcCompat="@drawable/ic_delete_list" />
 
             <ImageButton
-                android:id="@+id/btnEditList"
+                android:id="@+id/imEditList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/picker_green"
                 android:minHeight="@dimen/min_height"
-                app:layout_constraintBottom_toBottomOf="@+id/btnDeleteList"
-                app:layout_constraintEnd_toStartOf="@+id/btnDeleteList"
-                app:layout_constraintTop_toTopOf="@+id/btnDeleteList"
+                app:layout_constraintBottom_toBottomOf="@+id/imDeleteList"
+                app:layout_constraintEnd_toStartOf="@+id/imDeleteList"
+                app:layout_constraintTop_toTopOf="@+id/imDeleteList"
                 app:srcCompat="@drawable/ic_edit_list" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -93,9 +93,9 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/progress_counter_text_size"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/btnEditList"
-                app:layout_constraintEnd_toStartOf="@+id/btnEditList"
-                app:layout_constraintTop_toTopOf="@+id/btnEditList" />
+                app:layout_constraintBottom_toBottomOf="@+id/imEditList"
+                app:layout_constraintEnd_toStartOf="@+id/imEditList"
+                app:layout_constraintTop_toTopOf="@+id/imEditList" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

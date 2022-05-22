@@ -12,19 +12,24 @@ import com.example.shoppinglist.activities.MainApp
 import com.example.shoppinglist.databinding.FragmentShopListNamesBinding
 import com.example.shoppinglist.db.MainViewModel
 import com.example.shoppinglist.db.ShopListNameAdapter
+import com.example.shoppinglist.dialogs.DeleteDialog
 import com.example.shoppinglist.dialogs.NewListDialog
+import com.example.shoppinglist.entities.NoteItem
 import com.example.shoppinglist.entities.ShoppingListName
 import com.example.shoppinglist.utils.TimeManager
 
 private const val TAG: String = "@@@"
 
-class ShopListNamesFragment : BaseFragment() {
+class ShopListNamesFragment : BaseFragment(), ShopListNameAdapter.Listener {
 
     private var _binding: FragmentShopListNamesBinding? = null //FIXME не будет ли утечки?
     private val binding: FragmentShopListNamesBinding get() = _binding!!
-
     private lateinit var adapter: ShopListNameAdapter
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as MainApp).database)
@@ -67,7 +72,7 @@ class ShopListNamesFragment : BaseFragment() {
 
     private fun initRcView() = with(binding) {
         rcView.layoutManager = LinearLayoutManager(activity)
-        adapter= ShopListNameAdapter()
+        adapter= ShopListNameAdapter(this@ShopListNamesFragment)
         rcView.adapter = adapter
     }
 
@@ -77,16 +82,21 @@ class ShopListNamesFragment : BaseFragment() {
         }
     }
 
-
     companion object {
 
         @JvmStatic
         fun newInstance() = ShopListNamesFragment()
     }
 
+    override fun deleteItem(id: Int) {
+        DeleteDialog.showDialog(context as AppCompatActivity, object : DeleteDialog.Listener {
+            override fun onClick() {
+                mainViewModel.deleteShopListName(id)
+            }
+        })
+    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
+    override fun onClickItem(note: NoteItem) {
+        TODO("Not yet implemented")
     }
 }
