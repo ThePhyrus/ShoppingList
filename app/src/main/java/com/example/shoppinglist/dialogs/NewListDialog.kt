@@ -14,7 +14,10 @@ object NewListDialog {
         dialogBuilder.setView(binding.root)
         binding. apply {
             edNewListName.setText(name)
-            if (name.isNotEmpty()) btnCrateList.text = context.getString(R.string.update)
+            if (name.isNotEmpty()) {
+                tv.text =context.getString(R.string.update_list_name)
+                btnCrateList.text = context.getString(R.string.update)
+            }
             btnCrateList.setOnClickListener {
                 val listName = edNewListName.text.toString()
                 if (listName.isNotEmpty()){

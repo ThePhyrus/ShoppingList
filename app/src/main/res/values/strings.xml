@@ -15,4 +15,5 @@
     <string name="delete_item">Delete item</string>
     <string name="cancel">Cancel</string>
     <string name="update">Update</string>
+    <string name="update_list_name">Update list name</string>
 </resources>
