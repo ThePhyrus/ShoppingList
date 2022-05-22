@@ -7,20 +7,20 @@ import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.NewListDialogBinding
 
 object NewListDialog {
-    fun showDialog(context: Context, listener: Listener, name:String) {
+    fun showDialog(context: Context, listener: Listener, name: String) {
         var dialog: AlertDialog? = null
         val dialogBuilder = AlertDialog.Builder(context)
         val binding = NewListDialogBinding.inflate(LayoutInflater.from(context))
         dialogBuilder.setView(binding.root)
-        binding. apply {
+        binding.apply {
             edNewListName.setText(name)
             if (name.isNotEmpty()) {
-                tv.text =context.getString(R.string.update_list_name)
+                tv.text = context.getString(R.string.update_list_name)
                 btnCrateList.text = context.getString(R.string.update)
             }
             btnCrateList.setOnClickListener {
                 val listName = edNewListName.text.toString()
-                if (listName.isNotEmpty()){
+                if (listName.isNotEmpty()) {
                     listener.onClick(listName)
                 }
                 dialog?.dismiss()
@@ -32,6 +32,6 @@ object NewListDialog {
     }
 
     interface Listener {
-        fun onClick(name:String)
+        fun onClick(name: String)
     }
 }
