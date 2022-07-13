@@ -13,8 +13,13 @@ object DeleteDialog {
         val binding = DeleteDialogBinding.inflate(LayoutInflater.from(context))
         dialogBuilder.setView(binding.root)
         binding. apply {
+<<<<<<< HEAD
             btnDelete.setOnClickListener {
                     listener.onClick()
+=======
+            btnDeleteItem.setOnClickListener {
+               listener.onClick()
+>>>>>>> origin/second
                 dialog?.dismiss()
             }
             btnCancel.setOnClickListener {
