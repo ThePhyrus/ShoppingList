@@ -22,7 +22,7 @@ private const val TAG: String = "@@@"
 
 class ShopListNamesFragment : BaseFragment(), ShopListNameAdapter.Listener {
 
-    private var _binding: FragmentShopListNamesBinding? = null //FIXME не будет ли утечки?
+    private var _binding: FragmentShopListNamesBinding? = null
     private val binding: FragmentShopListNamesBinding get() = _binding!!
 
     private lateinit var adapter: ShopListNameAdapter
