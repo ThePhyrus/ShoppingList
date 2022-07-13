@@ -12,9 +12,9 @@ object DeleteDialog {
         val dialogBuilder = AlertDialog.Builder(context)
         val binding = DeleteDialogBinding.inflate(LayoutInflater.from(context))
         dialogBuilder.setView(binding.root)
-        binding. apply {
+        binding.apply {
             btnDelete.setOnClickListener {
-                    listener.onClick()
+                listener.onClick()
                 dialog?.dismiss()
             }
             btnCancel.setOnClickListener {
