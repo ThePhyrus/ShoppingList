@@ -2,7 +2,6 @@ package com.example.shoppinglist.fragments
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.activities.MainApp
 import com.example.shoppinglist.databinding.FragmentShopListNamesBinding
 import com.example.shoppinglist.db.MainViewModel
-import com.example.shoppinglist.db.ShopListNamesAdapter
+import com.example.shoppinglist.db.ShopListNameAdapter
 import com.example.shoppinglist.dialogs.DeleteDialog
 import com.example.shoppinglist.dialogs.NewListDialog
 import com.example.shoppinglist.entities.NoteItem
@@ -21,12 +20,12 @@ import com.example.shoppinglist.utils.TimeManager
 
 private const val TAG: String = "@@@"
 
-class ShopListNamesFragment : BaseFragment(), ShopListNamesAdapter.Listener {
+class ShopListNamesFragment : BaseFragment(), ShopListNameAdapter.Listener {
 
     private var _binding: FragmentShopListNamesBinding? = null //FIXME не будет ли утечки?
     private val binding: FragmentShopListNamesBinding get() = _binding!!
 
-    private lateinit var adapter: ShopListNamesAdapter
+    private lateinit var adapter: ShopListNameAdapter
 
 
     private val mainViewModel: MainViewModel by activityViewModels {
@@ -46,7 +45,7 @@ class ShopListNamesFragment : BaseFragment(), ShopListNamesAdapter.Listener {
                 )
                 mainViewModel.insertShopListName(shopListName)
             }
-        })
+        }, "")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,7 +69,7 @@ class ShopListNamesFragment : BaseFragment(), ShopListNamesAdapter.Listener {
 
     private fun initRcView() = with(binding) {
         myRcView.layoutManager = LinearLayoutManager(activity)
-        adapter = ShopListNamesAdapter(this@ShopListNamesFragment)
+        adapter = ShopListNameAdapter(this@ShopListNamesFragment)
         myRcView.adapter = adapter
     }
 
@@ -102,7 +101,15 @@ class ShopListNamesFragment : BaseFragment(), ShopListNamesAdapter.Listener {
         })
     }
 
-    override fun onClickItem(note: NoteItem) {
+    override fun editItem(shopListName: ShoppingListName) {
+        NewListDialog.showDialog(activity as AppCompatActivity, object : NewListDialog.Listener {
+            override fun onClick(name: String) {
+                mainViewModel.updateListName(shopListName.copy(name = name))
+            }
+        }, shopListName.name)
+    }
+
+    override fun onClickItem(shopListName: ShoppingListName) {
         TODO("Not yet implemented")
     }
 }

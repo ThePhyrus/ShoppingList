@@ -19,4 +19,7 @@
 
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
+
+    <string name="update">Update</string>
+    <string name="update_list">Updating list</string>
 </resources>

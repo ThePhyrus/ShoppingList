@@ -10,11 +10,10 @@ import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ListNameItemBinding
 import com.example.shoppinglist.entities.NoteItem
 import com.example.shoppinglist.entities.ShoppingListName
-import com.example.shoppinglist.utils.HtmlManager
 
 
-class ShopListNamesAdapter(private val listener: Listener) :
-    ListAdapter<ShoppingListName, ShopListNamesAdapter.ItemHolder>(ItemComparator()) {
+class ShopListNameAdapter(private val listener: Listener) :
+    ListAdapter<ShoppingListName, ShopListNameAdapter.ItemHolder>(ItemComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         /*
@@ -41,6 +40,10 @@ class ShopListNamesAdapter(private val listener: Listener) :
             }
             btnDeleteList.setOnClickListener {
                 listener.deleteItem(shopListNameItem.id!!)
+            }
+
+            btnEditList.setOnClickListener {
+                listener.editItem(shopListNameItem)
             }
         }
 
@@ -71,6 +74,7 @@ class ShopListNamesAdapter(private val listener: Listener) :
 
     interface Listener {
         fun deleteItem(id: Int)
-        fun onClickItem(note: NoteItem)
+        fun editItem(shopListName: ShoppingListName)
+        fun onClickItem(shopListName: ShoppingListName)
     }
 }
