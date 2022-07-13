@@ -13,13 +13,15 @@ import com.example.shoppinglist.activities.MainApp
 import com.example.shoppinglist.databinding.FragmentShopListNamesBinding
 import com.example.shoppinglist.db.MainViewModel
 import com.example.shoppinglist.db.ShopListNamesAdapter
+import com.example.shoppinglist.dialogs.DeleteDialog
 import com.example.shoppinglist.dialogs.NewListDialog
+import com.example.shoppinglist.entities.NoteItem
 import com.example.shoppinglist.entities.ShoppingListName
 import com.example.shoppinglist.utils.TimeManager
 
 private const val TAG: String = "@@@"
 
-class ShopListNamesFragment : BaseFragment() {
+class ShopListNamesFragment : BaseFragment(), ShopListNamesAdapter.Listener {
 
     private var _binding: FragmentShopListNamesBinding? = null //FIXME не будет ли утечки?
     private val binding: FragmentShopListNamesBinding get() = _binding!!
@@ -68,7 +70,7 @@ class ShopListNamesFragment : BaseFragment() {
 
     private fun initRcView() = with(binding) {
         myRcView.layoutManager = LinearLayoutManager(activity)
-        adapter = ShopListNamesAdapter()
+        adapter = ShopListNamesAdapter(this@ShopListNamesFragment)
         myRcView.adapter = adapter
     }
 
@@ -89,5 +91,18 @@ class ShopListNamesFragment : BaseFragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun deleteItem(id: Int) {
+        DeleteDialog.showDialog(context as AppCompatActivity, object : DeleteDialog.Listener{
+            override fun onClick() {
+                mainViewModel.deleteShopListName(id)
+            }
+
+        })
+    }
+
+    override fun onClickItem(note: NoteItem) {
+        TODO("Not yet implemented")
     }
 }

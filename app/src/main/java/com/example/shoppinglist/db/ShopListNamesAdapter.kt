@@ -13,7 +13,7 @@ import com.example.shoppinglist.entities.ShoppingListName
 import com.example.shoppinglist.utils.HtmlManager
 
 
-class ShopListNamesAdapter() :
+class ShopListNamesAdapter(private val listener: Listener) :
     ListAdapter<ShoppingListName, ShopListNamesAdapter.ItemHolder>(ItemComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
@@ -26,20 +26,21 @@ class ShopListNamesAdapter() :
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        holder.setData(getItem(position))
+        holder.setData(getItem(position), listener)
     }
 
     class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListNameItemBinding.bind(view)
 
-        fun setData(shopListNameItem: ShoppingListName) = with(binding) {
+        fun setData(shopListNameItem: ShoppingListName, listener: Listener) = with(binding) {
 
             tvListName.text = shopListNameItem.name
             tvListCreatingTime.text = shopListNameItem.time
             itemView.setOnClickListener {
+
             }
             btnDeleteList.setOnClickListener {
-
+                listener.deleteItem(shopListNameItem.id!!)
             }
         }
 
@@ -66,10 +67,10 @@ class ShopListNamesAdapter() :
             return oldItem == newItem
         }
 
-        interface Listener {
-            fun deleteItem(id: Int)
-            fun onClickItem(note: NoteItem)
-        }
+    }
 
+    interface Listener {
+        fun deleteItem(id: Int)
+        fun onClickItem(note: NoteItem)
     }
 }
