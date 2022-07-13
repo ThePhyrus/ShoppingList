@@ -9,34 +9,38 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ListNameItemBinding
 import com.example.shoppinglist.entities.NoteItem
-
 import com.example.shoppinglist.entities.ShoppingListName
+import com.example.shoppinglist.utils.HtmlManager
 
 
-class ShopListNameAdapter(private val listener:Listener) : ListAdapter<ShoppingListName, ShopListNameAdapter.ItemHolder>(ItemComparator()) {
+class ShopListNamesAdapter(private val listener: Listener) :
+    ListAdapter<ShoppingListName, ShopListNamesAdapter.ItemHolder>(ItemComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
+        /*
+        функция будет создавать для каждого списка покупок, которая берётся из базы данных, свой
+        собсвенный ItemHolder, который в себе будет создавать разметку для каждого элемента.
+        После создания разметки она сразу заполняется про помощи onBindViewHolder.
+         */
         return ItemHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        holder.setData(getItem(position),listener)
+        holder.setData(getItem(position), listener)
     }
 
     class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListNameItemBinding.bind(view)
 
-        fun setData(shopListNameItem: ShoppingListName, listener:Listener) = with(binding) {
+        fun setData(shopListNameItem: ShoppingListName, listener: Listener) = with(binding) {
+
             tvListName.text = shopListNameItem.name
             tvListCreatingTime.text = shopListNameItem.time
             itemView.setOnClickListener {
 
             }
-            imDeleteList.setOnClickListener {
+            btnDeleteList.setOnClickListener {
                 listener.deleteItem(shopListNameItem.id!!)
-            }
-            imEditList.setOnClickListener {
-                listener.editItem(shopListNameItem)
             }
         }
 
@@ -66,8 +70,7 @@ class ShopListNameAdapter(private val listener:Listener) : ListAdapter<ShoppingL
     }
 
     interface Listener {
-        fun deleteItem (id:Int)
-        fun editItem (shopListName: ShoppingListName)
-        fun onClickItem (shopListName: ShoppingListName)
+        fun deleteItem(id: Int)
+        fun onClickItem(note: NoteItem)
     }
 }

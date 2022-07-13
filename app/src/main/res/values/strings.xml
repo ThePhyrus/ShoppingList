@@ -4,16 +4,19 @@
     <string name="notes">Notes</string>
     <string name="shop_list">Shop list</string>
     <string name="new_item">New</string>
+
     <string name="note_title_hint">Title</string>
     <string name="description_hint">Description</string>
     <string name="note_fragment">note fragment</string>
+
     <string name="new_list">New list name</string>
     <string name="list_name">Enter list name</string>
+
     <string name="create_list">Create list</string>
-    <string name="delete_item_dialog_title">Deleting item..</string>
-    <string name="delete_item_message">Do you want to delete this item?</string>
-    <string name="delete_item">Delete item</string>
+
+    <string name="delete_alert">Delete</string>
+    <string name="delete_item">Do you want to delete this item?</string>
+
+    <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
-    <string name="update">Update</string>
-    <string name="update_list_name">Update list name</string>
 </resources>
