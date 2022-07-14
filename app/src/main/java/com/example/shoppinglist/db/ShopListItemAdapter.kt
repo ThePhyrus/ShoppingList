@@ -47,14 +47,14 @@ class ShopListItemAdapter(private val listener: Listener) :
             fun createShopItem(parent: ViewGroup): ItemHolder {
                 return ItemHolder(
                     LayoutInflater.from(parent.context) // надуватель разметки
-                        .inflate(R.layout.list_name_item, parent, false)
+                        .inflate(R.layout.shop_list_item, parent, false)
                 )
             }
 
             fun createLibraryItem(parent: ViewGroup): ItemHolder {
                 return ItemHolder(
                     LayoutInflater.from(parent.context) // надуватель разметки
-                        .inflate(R.layout.list_name_item, parent, false)
+                        .inflate(R.layout.shop_library_list_item, parent, false)
                 )
             }
         }
