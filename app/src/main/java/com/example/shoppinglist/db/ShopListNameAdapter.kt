@@ -36,12 +36,10 @@ class ShopListNameAdapter(private val listener: Listener) :
             tvListName.text = shopListNameItem.name
             tvListCreatingTime.text = shopListNameItem.time
             itemView.setOnClickListener {
-
             }
             btnDeleteList.setOnClickListener {
                 listener.deleteItem(shopListNameItem.id!!)
             }
-
             btnEditList.setOnClickListener {
                 listener.editItem(shopListNameItem)
             }
