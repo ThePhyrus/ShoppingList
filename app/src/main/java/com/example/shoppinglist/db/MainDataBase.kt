@@ -6,14 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.shoppinglist.entities.LibraryItem
 import com.example.shoppinglist.entities.NoteItem
-import com.example.shoppinglist.entities.ShoppingListItem
+import com.example.shoppinglist.entities.ShopListItem
 import com.example.shoppinglist.entities.ShopListNameItem
 
 @Database(
     entities = [
         LibraryItem::class,
         NoteItem::class,
-        ShoppingListItem::class,
+        ShopListItem::class,
         ShopListNameItem::class],
     version = 1
 )

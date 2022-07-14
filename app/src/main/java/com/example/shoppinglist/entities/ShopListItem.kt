@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "shop_list_item")
 
 // таблица для каждой конкретной позиции в списке
-data class ShoppingListItem(
+data class ShopListItem(
 
     @PrimaryKey(autoGenerate = true) // автогенерация id для каждого элемента таблицы
     val id: Int?,
