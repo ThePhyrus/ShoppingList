@@ -25,6 +25,6 @@ data class ShoppingListItem(
     val listId: Int,
 
     @ColumnInfo(name = "itemType") // для подсказок при введении названия продукта
-    val itemType: String = "item"
+    val itemType: Int = 0
 
 )
