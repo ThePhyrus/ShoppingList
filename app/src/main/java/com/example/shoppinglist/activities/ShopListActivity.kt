@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -65,10 +66,26 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         mainViewModel.insertShopItem(item)
     }
 
-    private fun listItemObserver() {
+  /*  private fun listItemObserver() { //вариант NECO //FIXME разница 1?
         mainViewModel.getAllItemsFromList(shopListNameItem?.id!!).observe(this, {
             adapter?.submitList(it)
+            binding.tvEmpty.visibility = if(it.isEmpty()){
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         })
+    }*/
+
+    private fun listItemObserver() { //вариант, предложенный студией //FIXME разница 1?
+        mainViewModel.getAllItemsFromList(shopListNameItem?.id!!).observe(this) {
+            adapter?.submitList(it)
+            binding.tvEmpty.visibility = if (it.isEmpty()) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+        }
     }
 
     private fun initRcView() = with (binding) {
@@ -95,7 +112,6 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
 
     private fun init() {
         shopListNameItem = intent.getSerializableExtra(SHOP_LIST_NAME) as ShopListNameItem
-        binding.tvTest.text = shopListNameItem?.name
     }
 
     companion object {
