@@ -1,8 +1,10 @@
 package com.example.shoppinglist.db
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -42,11 +44,30 @@ class ShopListItemAdapter(private val listener: Listener) :
                 tvName.text = shopListItem.name
                 tvInfo.text = shopListItem.itemInfo
                 tvInfo.visibility = infoVisibility(shopListItem)
+                chBox.setOnClickListener {
+                    setPaintFlagAndColor(binding)
+                }
             }
         }
 
         fun setLibraryData(shopListItem: ShopListItem, listener: Listener) {
 
+        }
+
+        private fun setPaintFlagAndColor (binding: ShopListItemBinding) { // lesson 38
+            binding.apply {
+                if (chBox.isChecked){
+                    tvName.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                    tvInfo.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                    tvName.setTextColor(ContextCompat.getColor(binding.root.context, R.color.mr_gray))
+                    tvInfo.setTextColor(ContextCompat.getColor(binding.root.context, R.color.mr_gray))
+                } else {
+                    tvName.paintFlags = Paint.ANTI_ALIAS_FLAG
+                    tvInfo.paintFlags = Paint.ANTI_ALIAS_FLAG
+                    tvName.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+                    tvInfo.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+                }
+            }
         }
 
         private fun infoVisibility (shopListItem: ShopListItem) : Int {
