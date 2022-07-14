@@ -98,7 +98,6 @@ class ShopListNamesFragment : BaseFragment(), ShopListNameAdapter.Listener {
             override fun onClick() {
                 mainViewModel.deleteShopListName(id)
             }
-
         })
     }
 
