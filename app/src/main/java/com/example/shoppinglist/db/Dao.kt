@@ -45,5 +45,8 @@ interface Dao {
     suspend fun updateNote(note: NoteItem)
 
     @Update
+    suspend fun updateListItem(item: ShopListItem) //lesson 39
+
+    @Update
     suspend fun updateListName(shopListNameItem: ShopListNameItem)
 }

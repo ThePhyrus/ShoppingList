@@ -19,7 +19,7 @@ data class ShopListItem(
     val itemInfo: String?, // nullable для возможности оставить поле пустым
 
     @ColumnInfo(name = "itemChecked") // куплен продукт или нет
-    val itemChecked: Int = 0, //todo подправить комментарий (см. ShoppingListNames.kt)
+    val itemChecked: Boolean = false,
 
     @ColumnInfo(name = "listId") // id списка, к которому принадлежит данный элемент
     val listId: Int,

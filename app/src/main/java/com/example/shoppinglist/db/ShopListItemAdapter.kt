@@ -44,8 +44,10 @@ class ShopListItemAdapter(private val listener: Listener) :
                 tvName.text = shopListItem.name
                 tvInfo.text = shopListItem.itemInfo
                 tvInfo.visibility = infoVisibility(shopListItem)
+                chBox.isChecked = shopListItem.itemChecked
+                setPaintFlagAndColor(binding)
                 chBox.setOnClickListener {
-                    setPaintFlagAndColor(binding)
+                    listener.onClickItem(shopListItem.copy(itemChecked = chBox.isChecked))
                 }
             }
         }
@@ -111,8 +113,6 @@ class ShopListItemAdapter(private val listener: Listener) :
     }
 
     interface Listener {
-        fun deleteItem(id: Int)
-        fun editItem(shopListNameItem: ShopListNameItem)
-        fun onClickItem(shopListNameItem: ShopListNameItem)
+        fun onClickItem(shopListItem: ShopListItem)
     }
 }
