@@ -16,7 +16,7 @@ data class ShopListItem(
     val name: String,
 
     @ColumnInfo(name = "itemInfo")// для доп. информации (например, вес или количество продукта)
-    val itemInfo: String?, // nullable для возможности оставить поле пустым
+    val itemInfo: String = "", // nullable для возможности оставить поле пустым (изменил на 40 уроке)
 
     @ColumnInfo(name = "itemChecked") // куплен продукт или нет
     val itemChecked: Boolean = false,

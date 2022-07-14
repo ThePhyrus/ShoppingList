@@ -47,7 +47,10 @@ class ShopListItemAdapter(private val listener: Listener) :
                 chBox.isChecked = shopListItem.itemChecked
                 setPaintFlagAndColor(binding)
                 chBox.setOnClickListener {
-                    listener.onClickItem(shopListItem.copy(itemChecked = chBox.isChecked))
+                    listener.onClickItem(shopListItem.copy(itemChecked = chBox.isChecked), CHECK_BOX)
+                }
+                imbEditLibrary.setOnClickListener {
+                    listener.onClickItem(shopListItem, EDIT)
                 }
             }
         }
@@ -73,7 +76,7 @@ class ShopListItemAdapter(private val listener: Listener) :
         }
 
         private fun infoVisibility (shopListItem: ShopListItem) : Int {
-            return if (shopListItem.itemInfo.isNullOrEmpty()) {
+            return if (shopListItem.itemInfo.isEmpty()) {
                 View.GONE
             } else {
                 View.VISIBLE
@@ -113,6 +116,11 @@ class ShopListItemAdapter(private val listener: Listener) :
     }
 
     interface Listener {
-        fun onClickItem(shopListItem: ShopListItem)
+        fun onClickItem(shopListItem: ShopListItem, state: Int)
+    }
+
+    companion object {
+        const val EDIT = 0
+        const val CHECK_BOX = 1
     }
 }
