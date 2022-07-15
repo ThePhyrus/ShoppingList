@@ -1,5 +1,6 @@
 package com.example.shoppinglist.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -15,6 +16,7 @@ import com.example.shoppinglist.db.ShopListItemAdapter
 import com.example.shoppinglist.dialogs.EditListItemDialog
 import com.example.shoppinglist.entities.ShopListItem
 import com.example.shoppinglist.entities.ShopListNameItem
+import com.example.shoppinglist.utils.ShareHelper
 
 class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     private lateinit var binding: ActivityShopListBinding
@@ -46,7 +48,7 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean { //FIXME HARDCODE!
         when (item.itemId) {
             R.id.save_item -> { //todo add dialog??
                 addNewShopItem()
@@ -57,6 +59,12 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
             }
             R.id.clear_list -> { //todo add clear dialog??
                 mainViewModel.deleteShopList(shopListNameItem?.id!!, false)
+            }
+            R.id.share_list -> { //todo add share dialog??
+                startActivity(Intent.createChooser(
+                    ShareHelper.shareShopList(adapter?.currentList!!, shopListNameItem?.name!!),
+                    "Share by"
+                    ))
             }
         }
         return super.onOptionsItemSelected(item)
@@ -76,16 +84,16 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         mainViewModel.insertShopItem(item)
     }
 
-  /*  private fun listItemObserver() { //вариант NECO //FIXME разница 1?
-        mainViewModel.getAllItemsFromList(shopListNameItem?.id!!).observe(this, {
-            adapter?.submitList(it)
-            binding.tvEmpty.visibility = if(it.isEmpty()){
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
-        })
-    }*/
+    /*  private fun listItemObserver() { //вариант NECO //FIXME разница 1?
+          mainViewModel.getAllItemsFromList(shopListNameItem?.id!!).observe(this, {
+              adapter?.submitList(it)
+              binding.tvEmpty.visibility = if(it.isEmpty()){
+                  View.VISIBLE
+              } else {
+                  View.GONE
+              }
+          })
+      }*/
 
     private fun listItemObserver() { //вариант, предложенный студией //FIXME разница 1?
         mainViewModel.getAllItemsFromList(shopListNameItem?.id!!).observe(this) {
@@ -98,7 +106,7 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         }
     }
 
-    private fun initRcView() = with (binding) {
+    private fun initRcView() = with(binding) {
         adapter = ShopListItemAdapter(this@ShopListActivity)
         rcViewRename.layoutManager = LinearLayoutManager(this@ShopListActivity)
         rcViewRename.adapter = adapter
@@ -129,14 +137,14 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     }
 
     override fun onClickItem(shopListItem: ShopListItem, state: Int) { // lesson 39
-        when(state) {
+        when (state) {
             ShopListItemAdapter.CHECK_BOX -> mainViewModel.updateListItem(shopListItem)
             ShopListItemAdapter.EDIT -> editListItem(shopListItem)
         }
 
     }
 
-    private fun editListItem (item: ShopListItem) {
+    private fun editListItem(item: ShopListItem) {
         EditListItemDialog.showDialog(this, item, object : EditListItemDialog.Listener {
             override fun onClick(item: ShopListItem) {
                 mainViewModel.updateListItem(item)
