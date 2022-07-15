@@ -53,14 +53,15 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         return true
     }
 
-    private fun textWatcher (): TextWatcher { //lesson 43
-        return object : TextWatcher{
+    private fun textWatcher(): TextWatcher { //lesson 43
+        return object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                Log.d("@@@", "onTextChanged: $s ")
+            override fun onTextChanged(word: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.d("@@@", "onTextChanged: $word ")
+                mainViewModel.getAllLibraryItems("%$word%")
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -83,10 +84,12 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
                 mainViewModel.deleteShopList(shopListNameItem?.id!!, false)
             }
             R.id.share_list -> { //todo add share dialog??
-                startActivity(Intent.createChooser(
-                    ShareHelper.shareShopList(adapter?.currentList!!, shopListNameItem?.name!!),
-                    "Share by"
-                    ))
+                startActivity(
+                    Intent.createChooser(
+                        ShareHelper.shareShopList(adapter?.currentList!!, shopListNameItem?.name!!),
+                        "Share by"
+                    )
+                )
             }
         }
         return super.onOptionsItemSelected(item)
@@ -128,6 +131,42 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         }
     }
 
+/*    private fun libraryItemObserver(){ //lesson 45 //FIXME вариант NECO 2
+        mainViewModel.libraryItems.observe(this, {
+            val tempShopList = ArrayList<ShopListItem>()
+            it.forEach { item ->
+                val shopItem = ShopListItem(
+                    item.id,
+                    item.name,
+                    "",
+                    false,
+                    0,
+                    1
+                )
+                tempShopList.add(shopItem)
+            }
+            adapter?.submitList(tempShopList)
+        })
+    }*/
+
+    private fun libraryItemObserver() { //lesson 45 //FIXME вариант студии 2
+        mainViewModel.libraryItems.observe(this) {
+            val tempShopList = ArrayList<ShopListItem>()
+            it.forEach { item ->
+                val shopItem = ShopListItem(
+                    item.id,
+                    item.name,
+                    "",
+                    false,
+                    0,
+                    1
+                )
+                tempShopList.add(shopItem)
+            }
+            adapter?.submitList(tempShopList)
+        }
+    }
+
     private fun initRcView() = with(binding) {
         adapter = ShopListItemAdapter(this@ShopListActivity)
         rcViewRename.layoutManager = LinearLayoutManager(this@ShopListActivity)
@@ -139,6 +178,10 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 saveItem.isVisible = true
                 edItem?.addTextChangedListener(textWatcher) //lesson 43
+                libraryItemObserver()
+                mainViewModel.getAllItemsFromList(shopListNameItem?.id!!)
+                    .removeObservers(this@ShopListActivity)
+                mainViewModel.getAllLibraryItems("%%")
                 return true
             }
 
@@ -146,6 +189,9 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
                 saveItem.isVisible = false
                 edItem?.removeTextChangedListener(textWatcher) //lesson 43
                 invalidateOptionsMenu()
+                mainViewModel.libraryItems.removeObservers(this@ShopListActivity)
+                edItem?.setText("")
+                listItemObserver()
                 return true
             }
 

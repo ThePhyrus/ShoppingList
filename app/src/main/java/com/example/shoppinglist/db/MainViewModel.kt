@@ -17,6 +17,7 @@ class MainViewModel(database: MainDataBase) : ViewModel() {
 
     val dao = database.getDao() // создам экземпляр? интефейса Dao
 
+    val libraryItems = MutableLiveData<List<LibraryItem>>() //lesson 45
 
     // если список обновится, то обновится и allNotes
     val allNotes: LiveData<List<NoteItem>> = dao.getAllNotes().asLiveData()
@@ -24,6 +25,10 @@ class MainViewModel(database: MainDataBase) : ViewModel() {
 
     fun getAllItemsFromList(listId: Int): LiveData<List<ShopListItem>> { //lesson 36
         return dao.getAllShopListItems(listId).asLiveData()
+    }
+
+    fun getAllLibraryItems(name: String) = viewModelScope.launch{ //lesson 45
+       libraryItems.postValue(dao.getAllLibraryItems(name))
     }
 
     fun insertNote(note: NoteItem) = viewModelScope.launch {
