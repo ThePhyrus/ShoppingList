@@ -21,4 +21,7 @@
 
     <color name="mr_gray">#959695</color>
     <color name="mr_dark_gray">#6A6A6A</color>
+
+    <color name="mr_progress_green">#2ABC02</color>
+    <color name="mr_progress_red">#BC0202</color>
 </resources>
