@@ -53,6 +53,10 @@ class MainViewModel(database: MainDataBase) : ViewModel() {
         dao.updateNote(note)
     }
 
+    fun updateLibraryItem(item: LibraryItem) = viewModelScope.launch { //lesson 46
+        dao.updateLibraryItem(item)
+    }
+
     fun updateListItem(item: ShopListItem) = viewModelScope.launch { //lesson 39
         dao.updateListItem(item)
     }
@@ -63,6 +67,10 @@ class MainViewModel(database: MainDataBase) : ViewModel() {
 
     fun deleteNote(id: Int) = viewModelScope.launch {
         dao.deleteNote(id)
+    }
+
+    fun deleteLibraryItem(id: Int) = viewModelScope.launch { //lesson 46
+        dao.deleteLibraryItem(id)
     }
 
     fun deleteShopList(id: Int, deleteList: Boolean) = viewModelScope.launch {
