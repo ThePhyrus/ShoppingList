@@ -1,6 +1,7 @@
 package com.example.shoppinglist.db
 
 import androidx.lifecycle.*
+import com.example.shoppinglist.entities.LibraryItem
 import com.example.shoppinglist.entities.NoteItem
 import com.example.shoppinglist.entities.ShopListItem
 import com.example.shoppinglist.entities.ShopListNameItem
@@ -35,6 +36,12 @@ class MainViewModel(database: MainDataBase) : ViewModel() {
 
     fun insertShopItem(shopListItem: ShopListItem) = viewModelScope.launch {
         dao.insertItem(shopListItem)
+        if (!isLibraryItemExists(shopListItem.name)) dao.insertLibraryItem( //lesson 44
+            LibraryItem(
+                null,
+                shopListItem.name
+            )
+        )
     }
 
     fun updateNote(note: NoteItem) = viewModelScope.launch {
@@ -56,6 +63,10 @@ class MainViewModel(database: MainDataBase) : ViewModel() {
     fun deleteShopList(id: Int, deleteList: Boolean) = viewModelScope.launch {
         if (deleteList) dao.deleteShopListName(id)
         dao.deleteShopItemsByListId(id) //lesson 41
+    }
+
+    private suspend fun isLibraryItemExists(name: String): Boolean { //lesson 44
+        return dao.getAllLibraryItems(name).isNotEmpty()
     }
 
 
