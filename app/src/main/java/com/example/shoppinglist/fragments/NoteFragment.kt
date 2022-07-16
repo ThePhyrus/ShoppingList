@@ -15,6 +15,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.shoppinglist.R
 import com.example.shoppinglist.activities.MainApp
 import com.example.shoppinglist.activities.NewNoteActivity
@@ -65,10 +67,18 @@ class NoteFragment : BaseFragment(), NoteAdapter.Listener {
     }
 
     private fun initRcView() = with(binding) {
-        rcViewNote.layoutManager = LinearLayoutManager(activity)
         defPref = PreferenceManager.getDefaultSharedPreferences(activity) //lesson 53
+        rcViewNote.layoutManager = getLayoutManager() //changed on lesson 54
         adapter = NoteAdapter(this@NoteFragment, defPref)
         rcViewNote.adapter = adapter
+    }
+
+    private fun getLayoutManager() : RecyclerView.LayoutManager { //lesson 54
+        return if (defPref.getString("note_style_key", "Linear") == "Linear") {
+            LinearLayoutManager(activity)
+        } else {
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        }
     }
 
     private fun observer() { //FIXME ???
