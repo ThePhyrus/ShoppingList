@@ -55,7 +55,7 @@
             app:useSimpleSummaryProvider="true"
             android:entryValues="@array/text_size_values"
             android:icon="@drawable/ic_text_size"
-            android:key="context_text_size_key"
+            android:key="content_text_size_key"
             android:title="@string/content_text_size" />
     </PreferenceCategory>
 </PreferenceScreen>

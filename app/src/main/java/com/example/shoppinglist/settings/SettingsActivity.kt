@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import com.example.shoppinglist.R
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity() { //lesson 51
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -16,7 +16,7 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean { //lesson 51
         if (item.itemId == android.R.id.home) finish()
         return super.onOptionsItemSelected(item)
     }
