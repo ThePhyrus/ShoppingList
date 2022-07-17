@@ -15,19 +15,20 @@ import com.example.shoppinglist.fragments.ShopListNamesFragment
 import com.example.shoppinglist.settings.SettingsActivity
 
 
-
 class MainActivity : AppCompatActivity(), NewListDialog.Listener {
 
     lateinit var binding: ActivityMainBinding
     private var currentMenuItemId = R.id.shop_list //lesson 54
     private lateinit var defPref: SharedPreferences
+    private var currentTheme = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
         setTheme(getSelectedTheme()) //lesson 55
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        currentTheme = defPref.getString("theme_key", "blue").toString() //lesson 56
         FragmentManager.setFragment(ShopListNamesFragment.newInstance(), this)
         setBottomNavListener()
     }
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
         }
     }
 
-    private fun getSelectedTheme():Int{ //lesson 55
+    private fun getSelectedTheme(): Int { //lesson 55
         return if (defPref.getString("theme_key", "blue") == "blue") {
             R.style.Theme_ShoppingListBlue
         } else {
@@ -65,6 +66,7 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
     override fun onResume() {
         super.onResume()
         binding.bNav.selectedItemId = currentMenuItemId
+        if (defPref.getString("theme_key", "blue") != currentTheme) recreate() //lesson 56
     }
 
     override fun onClick(name: String) {
