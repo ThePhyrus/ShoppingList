@@ -16,12 +16,20 @@
     <color name="picker_black">#000000</color>
     <color name="picker_yellow">#D6FD00</color>
     <color name="picker_orange">#EC8507</color>
-    <color name="fragment_note_background">#A6A4A4</color>
-    <color name="activity_new_note_background">#A3D124</color>
 
+
+<!--    Theme colors-->
+    <color name="mr_blue">#01359E</color>
+    <color name="mr_blue_light">#002BFF</color>
+    <color name="mr_blue_dark">#001477</color>
+
+    <color name="mr_black">#000000</color>
+    <color name="mr_white">#FFFFFF</color>
     <color name="mr_gray">#959695</color>
     <color name="mr_dark_gray">#6A6A6A</color>
-
     <color name="mr_progress_green">#2ABC02</color>
     <color name="mr_progress_red">#BC0202</color>
+
+    <color name="fragment_note_background">#A6A4A4</color>
+    <color name="activity_new_note_background">#A3D124</color>
 </resources>

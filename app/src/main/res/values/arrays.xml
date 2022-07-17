@@ -24,14 +24,12 @@
 
 
     <string-array name="chose_theme_array">
-        <item>Toxic theme</item>
+        <item>Blue theme</item>
         <item>Contrast theme</item>
-        <item>Risk theme</item>
     </string-array>
     <string-array name="chose_theme_values">
-        <item>Toxic</item>
-        <item>Contrast</item>
-        <item>Risk</item>
+        <item>blue</item>
+        <item>contrast</item>
     </string-array>
 
     <string-array name="text_size_array">

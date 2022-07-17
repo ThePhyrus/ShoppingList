@@ -32,10 +32,13 @@ class NewNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewNoteBinding
     private var note: NoteItem? = null
     private var pref: SharedPreferences? = null
+    private lateinit var defPref: SharedPreferences //lesson 55
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewNoteBinding.inflate(layoutInflater)
+        defPref = PreferenceManager.getDefaultSharedPreferences(this) //lesson 55
+        setTheme(getSelectedTheme()) //lesson 55
         setContentView(binding.root)
         actionBarSettings()
         init()
@@ -236,6 +239,14 @@ class NewNoteActivity : AppCompatActivity() {
     private fun setRazmerTexta() = with(binding){
         edTitle.setTextSize(pref?.getString("title_text_size_key", "16"))
         edDescription.setTextSize(pref?.getString("content_text_size_key", "12"))
+    }
+
+    private fun getSelectedTheme():Int{ //lesson 55
+        return if (defPref.getString("theme_key", "blue") == "blue") {
+            R.style.Theme_NewNoteBlue
+        } else {
+            R.style.Theme_NewNoteContrast
+        }
     }
 
 }

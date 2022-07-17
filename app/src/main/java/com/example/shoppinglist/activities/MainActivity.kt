@@ -1,9 +1,11 @@
 package com.example.shoppinglist.activities
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.preference.PreferenceManager
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityMainBinding
 import com.example.shoppinglist.dialogs.NewListDialog
@@ -18,10 +20,13 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
 
     lateinit var binding: ActivityMainBinding
     private var currentMenuItemId = R.id.shop_list //lesson 54
+    private lateinit var defPref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        defPref = PreferenceManager.getDefaultSharedPreferences(this)
+        setTheme(getSelectedTheme()) //lesson 55
         setContentView(binding.root)
         FragmentManager.setFragment(ShopListNamesFragment.newInstance(), this)
         setBottomNavListener()
@@ -46,6 +51,14 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
                 }
             }
             true
+        }
+    }
+
+    private fun getSelectedTheme():Int{ //lesson 55
+        return if (defPref.getString("theme_key", "blue") == "blue") {
+            R.style.Theme_ShoppingListBlue
+        } else {
+            R.style.Theme_ShoppingListContrast
         }
     }
 
