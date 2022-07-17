@@ -13,6 +13,12 @@ import com.example.shoppinglist.fragments.FragmentManager
 import com.example.shoppinglist.fragments.NoteFragment
 import com.example.shoppinglist.fragments.ShopListNamesFragment
 import com.example.shoppinglist.settings.SettingsActivity
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
 
 class MainActivity : AppCompatActivity(), NewListDialog.Listener {
@@ -21,6 +27,9 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
     private var currentMenuItemId = R.id.shop_list //lesson 54
     private lateinit var defPref: SharedPreferences
     private var currentTheme = ""
+    private var iAd: InterstitialAd? = null //lesson 57
+    private var adShowCounter = 0
+    private var adShowCounterMax = 3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
@@ -31,17 +40,74 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
         currentTheme = defPref.getString("theme_key", "blue").toString() //lesson 56
         FragmentManager.setFragment(ShopListNamesFragment.newInstance(), this)
         setBottomNavListener()
+        loadInterAd()//lesson 57
+    }
+
+    private fun loadInterAd() { //lesson 57
+        val request = AdRequest.Builder().build()
+        InterstitialAd.load(this, getString(R.string.inter_ad_id), request,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdLoaded(ad: InterstitialAd) {
+                    iAd = ad
+                }
+
+                override fun onAdFailedToLoad(p0: LoadAdError) {
+                    iAd = null
+                }
+            })
+    }
+
+    private fun showInterAd(myAdListener: MyAdListener) {//lesson 57
+        if (iAd != null && adShowCounter > adShowCounterMax) {
+            iAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    iAd = null
+                    loadInterAd()
+                    myAdListener.onFinish()
+                }
+
+                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                    iAd = null
+                    loadInterAd()
+                }
+
+                override fun onAdShowedFullScreenContent() {
+                    iAd = null
+                    loadInterAd()
+                }
+            }
+            adShowCounter = 0
+            iAd?.show(this)
+        } else {
+            adShowCounter++
+            myAdListener.onFinish()
+        }
     }
 
     private fun setBottomNavListener() {
         binding.bNav.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.settings -> {
-                    startActivity(Intent(this, SettingsActivity::class.java))
+                    showInterAd(object : MyAdListener { //lesson 57
+                        override fun onFinish() {
+                            startActivity(
+                                Intent(
+                                    this@MainActivity, SettingsActivity::class.java
+                                )
+                            )
+                        }
+                    })
                 }
                 R.id.notes -> {
-                    currentMenuItemId = R.id.notes //lesson 54
-                    FragmentManager.setFragment(NoteFragment.newInstance(), this)
+                    showInterAd(object : MyAdListener { //lesson 57
+                        override fun onFinish() {
+                            currentMenuItemId = R.id.notes //lesson 54
+                            FragmentManager.setFragment(
+                                NoteFragment.newInstance(),
+                                this@MainActivity
+                            )
+                        }
+                    })
                 }
                 R.id.shop_list -> {
                     currentMenuItemId = R.id.shop_list //lesson 54
@@ -71,5 +137,9 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
 
     override fun onClick(name: String) {
         Log.d("@@@", "works $name")
+    }
+
+    interface MyAdListener {
+        fun onFinish()
     }
 }
