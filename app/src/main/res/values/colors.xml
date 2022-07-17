@@ -31,5 +31,6 @@
     <color name="mr_progress_red">#BC0202</color>
 
     <color name="fragment_note_background">#A6A4A4</color>
+    <color name="activity_settings_background_color">#7E7E7E</color>
     <color name="activity_new_note_background">#A3D124</color>
 </resources>
