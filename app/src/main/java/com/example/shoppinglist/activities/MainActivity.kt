@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.preference.PreferenceManager
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityMainBinding
@@ -53,17 +54,22 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
 
                 override fun onAdFailedToLoad(p0: LoadAdError) {
                     iAd = null
+                    Toast.makeText(
+                        this@MainActivity,
+                        R.string.fail_to_load_inter_ad,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             })
     }
 
-    private fun showInterAd(myAdListener: MyAdListener) {//lesson 57
+    private fun showInterAd(adListener: AdListener) {//lesson 57
         if (iAd != null && adShowCounter > adShowCounterMax) {
             iAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {
                     iAd = null
                     loadInterAd()
-                    myAdListener.onFinish()
+                    adListener.onFinish()
                 }
 
                 override fun onAdFailedToShowFullScreenContent(p0: AdError) {
@@ -80,7 +86,7 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
             iAd?.show(this)
         } else {
             adShowCounter++
-            myAdListener.onFinish()
+            adListener.onFinish()
         }
     }
 
@@ -88,7 +94,7 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
         binding.bNav.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.settings -> {
-                    showInterAd(object : MyAdListener { //lesson 57
+                    showInterAd(object : AdListener { //lesson 57
                         override fun onFinish() {
                             startActivity(
                                 Intent(
@@ -99,7 +105,7 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
                     })
                 }
                 R.id.notes -> {
-                    showInterAd(object : MyAdListener { //lesson 57
+                    showInterAd(object : AdListener { //lesson 57
                         override fun onFinish() {
                             currentMenuItemId = R.id.notes //lesson 54
                             FragmentManager.setFragment(
@@ -139,7 +145,7 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
         Log.d("@@@", "works $name")
     }
 
-    interface MyAdListener {
+    interface AdListener {
         fun onFinish()
     }
 }

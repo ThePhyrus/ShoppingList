@@ -37,15 +37,16 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.core:core-ktx:1.8.0'
     //start
-    implementation 'androidx.room:room-ktx:2.3.0'
-    kapt 'androidx.room:room-compiler:2.3.0'
+    implementation 'androidx.room:room-ktx:2.4.2'
+    kapt 'androidx.room:room-compiler:2.4.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation 'androidx.preference:preference-ktx:1.1.1'
-    implementation 'com.google.android.gms:play-services-ads:20.4.0' //Для рекламы lesson 57
+    implementation 'com.google.android.gms:play-services-ads:21.1.0' //Для рекламы lesson 57
+    implementation 'com.android.billingclient:billing:5.0.0' // для встроенных покупок //lesson 58
 
     //end
     implementation 'androidx.appcompat:appcompat:1.4.2'

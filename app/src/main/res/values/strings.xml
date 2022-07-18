@@ -40,5 +40,7 @@
     <string name="title_text_size">Title text size</string>
     <string name="content_text_size">Content text size</string>
 
+    <string name="fail_to_load_inter_ad">Fail to load inter ad</string>
+
 
 </resources>
