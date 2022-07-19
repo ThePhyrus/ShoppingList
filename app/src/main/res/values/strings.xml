@@ -41,6 +41,7 @@
     <string name="content_text_size">Content text size</string>
 
     <string name="fail_to_load_inter_ad">Fail to load inter ad</string>
+    <string name="remove_ads_button_is_pressed">Remove ads button is pressed</string>
 
 
 </resources>

@@ -23,6 +23,7 @@
         <Preference
             android:icon="@drawable/ic_ads_off"
             android:summary="@string/remove_ads_summary"
+            android:key="remove_ads_key"
             android:title="@string/remove_ads" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/theme_settings">

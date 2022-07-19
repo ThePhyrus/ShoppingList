@@ -50,10 +50,14 @@ class BillingManager(private val activity: AppCompatActivity) { //lesson 58 и 5
             }
 
             override fun onBillingSetupFinished(p0: BillingResult) {
-
+                getItem()
             }
 
         })
+    }
+
+    fun closeConnection(){
+        bClient?.endConnection()
     }
 
     private fun getItem() {//lesson 59

@@ -45,8 +45,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation 'androidx.preference:preference-ktx:1.1.1'
-    implementation 'com.google.android.gms:play-services-ads:21.1.0' //Для рекламы lesson 57
-    implementation 'com.android.billingclient:billing:5.0.0' // для встроенных покупок //lesson 58
+    implementation 'com.google.android.gms:play-services-ads:20.4.0' //Для рекламы lesson 57
+    implementation 'com.android.billingclient:billing:4.0.0' // для встроенных покупок //lesson 58
 
     //end
     implementation 'androidx.appcompat:appcompat:1.4.2'
