@@ -7,7 +7,7 @@ import java.io.Serializable
 
 @Entity(tableName = "shopping_list_names") // таблица для сохранения названий списков
 
-data class ShoppingListName(
+data class ShopListNameItem(
     // здесь укажу какие колонны будут в списке
 
     @PrimaryKey(autoGenerate = true) // у каждого элемента будет уникальный id (следить не надо)

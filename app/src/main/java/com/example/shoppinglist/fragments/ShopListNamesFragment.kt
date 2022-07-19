@@ -1,8 +1,8 @@
 package com.example.shoppinglist.fragments
 
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,21 +10,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.activities.MainApp
+import com.example.shoppinglist.activities.ShopListActivity
 import com.example.shoppinglist.databinding.FragmentShopListNamesBinding
 import com.example.shoppinglist.db.MainViewModel
-import com.example.shoppinglist.db.ShopListNamesAdapter
+import com.example.shoppinglist.db.ShopListNameAdapter
+import com.example.shoppinglist.dialogs.DeleteDialog
 import com.example.shoppinglist.dialogs.NewListDialog
-import com.example.shoppinglist.entities.ShoppingListName
+import com.example.shoppinglist.entities.ShopListNameItem
 import com.example.shoppinglist.utils.TimeManager
 
 private const val TAG: String = "@@@"
 
-class ShopListNamesFragment : BaseFragment() {
+class ShopListNamesFragment : BaseFragment(), ShopListNameAdapter.Listener {
 
     private var _binding: FragmentShopListNamesBinding? = null //FIXME не будет ли утечки?
     private val binding: FragmentShopListNamesBinding get() = _binding!!
 
-    private lateinit var adapter: ShopListNamesAdapter
+    private lateinit var adapter: ShopListNameAdapter
 
 
     private val mainViewModel: MainViewModel by activityViewModels {
@@ -34,7 +36,7 @@ class ShopListNamesFragment : BaseFragment() {
     override fun onClickNew() {
         NewListDialog.showDialog(activity as AppCompatActivity, object : NewListDialog.Listener {
             override fun onClick(name: String) {
-                val shopListName = ShoppingListName(
+                val shopListName = ShopListNameItem(
                     null,
                     name,
                     TimeManager.getCurrentTime(),
@@ -44,7 +46,7 @@ class ShopListNamesFragment : BaseFragment() {
                 )
                 mainViewModel.insertShopListName(shopListName)
             }
-        })
+        }, "")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,7 +70,7 @@ class ShopListNamesFragment : BaseFragment() {
 
     private fun initRcView() = with(binding) {
         myRcView.layoutManager = LinearLayoutManager(activity)
-        adapter = ShopListNamesAdapter()
+        adapter = ShopListNameAdapter(this@ShopListNamesFragment)
         myRcView.adapter = adapter
     }
 
@@ -89,5 +91,28 @@ class ShopListNamesFragment : BaseFragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun deleteItem(id: Int) {
+        DeleteDialog.showDialog(context as AppCompatActivity, object : DeleteDialog.Listener{
+            override fun onClick() {
+                mainViewModel.deleteShopList(id, true)
+            }
+        })
+    }
+
+    override fun editItem(shopListNameItem: ShopListNameItem) {
+        NewListDialog.showDialog(activity as AppCompatActivity, object : NewListDialog.Listener {
+            override fun onClick(name: String) {
+                mainViewModel.updateListName(shopListNameItem.copy(name = name))
+            }
+        }, shopListNameItem.name)
+    }
+
+    override fun onClickItem(shopListNameItem: ShopListNameItem) {
+        val i = Intent(activity, ShopListActivity::class.java).apply {
+            putExtra(ShopListActivity.SHOP_LIST_NAME, shopListNameItem)
+        }
+        startActivity(i)
     }
 }

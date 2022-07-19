@@ -2,6 +2,7 @@ package com.example.shoppinglist.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,7 +15,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.EditText
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityNewNoteBinding
 import com.example.shoppinglist.entities.NoteItem
@@ -28,16 +31,21 @@ import java.util.*
 class NewNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewNoteBinding
     private var note: NoteItem? = null
+    private var pref: SharedPreferences? = null
+    private lateinit var defPref: SharedPreferences //lesson 55
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewNoteBinding.inflate(layoutInflater)
+        defPref = PreferenceManager.getDefaultSharedPreferences(this) //lesson 55
+        setTheme(getSelectedTheme()) //lesson 55
         setContentView(binding.root)
         actionBarSettings()
         init()
+        setRazmerTexta() //todo осознать и переименовать:) См.урок №52
         getNote()
         onClickColorPicker()
-        actionMenuCallback() //FIXME action menu всё равно появляется, если назать на свободное место
+        actionMenuCallback() //FIXME action menu всё равно появляется, если нажать на свободное место?
     }
 
     private fun onClickColorPicker() = with(binding) {
@@ -64,6 +72,7 @@ class NewNoteActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     private fun init() {
         binding.colorPicker.setOnTouchListener(MyTouchListener())
+        pref = PreferenceManager.getDefaultSharedPreferences(this) //lesson 52
     }
 
     private fun getNote() {
@@ -220,4 +229,24 @@ class NewNoteActivity : AppCompatActivity() {
         }
         binding.edDescription.customSelectionActionModeCallback = actionMenuCallback
     }
+
+
+    //lesson 52 (отличный пример использования экст-функции!)
+    private fun EditText.setTextSize(size: String?) {
+        if (size != null) this.textSize = size.toFloat()
+    }
+
+    private fun setRazmerTexta() = with(binding){
+        edTitle.setTextSize(pref?.getString("title_text_size_key", "16"))
+        edDescription.setTextSize(pref?.getString("content_text_size_key", "12"))
+    }
+
+    private fun getSelectedTheme():Int{ //lesson 55
+        return if (defPref.getString("theme_key", "blue") == "blue") {
+            R.style.Theme_NewNoteBlue
+        } else {
+            R.style.Theme_NewNoteContrast
+        }
+    }
+
 }
