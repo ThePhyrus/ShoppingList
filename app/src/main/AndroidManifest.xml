@@ -15,10 +15,10 @@
         android:theme="@style/Theme.ShoppingListContrast">
         <activity
             android:name=".settings.SettingsActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.ShopListActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.NewNoteActivity"
             android:exported="true"
