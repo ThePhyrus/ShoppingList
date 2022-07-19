@@ -2,6 +2,7 @@ package com.example.shoppinglist.settings
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -19,11 +20,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
         init()
     }
 
-     private fun init() {//lesson 60
-         bManager = BillingManager(activity as AppCompatActivity)
+    private fun init() {//lesson 60
+        bManager = BillingManager(activity as AppCompatActivity)
         removeAdsPref = findPreference("remove_ads_key")!!
         removeAdsPref.setOnPreferenceClickListener {
-
+            Toast.makeText(
+                activity,
+                R.string.remove_ads_button_is_pressed,
+                Toast.LENGTH_LONG
+            ).show()
             bManager.startConnection()
             true
         }

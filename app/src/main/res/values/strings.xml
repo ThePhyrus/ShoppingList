@@ -42,6 +42,8 @@
 
     <string name="fail_to_load_inter_ad">Fail to load inter ad</string>
     <string name="remove_ads_button_is_pressed">Remove ads button is pressed</string>
+    <string name="thank_you_for_your_money">Thank you for your money</string>
+    <string name="purchase_is_failed">Purchase is failed</string>
 
 
 </resources>

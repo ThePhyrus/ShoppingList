@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.preference.PreferenceManager
+import com.android.billingclient.api.BillingClient
 import com.example.shoppinglist.R
+import com.example.shoppinglist.billing.BillingManager
 import com.example.shoppinglist.databinding.ActivityMainBinding
 import com.example.shoppinglist.dialogs.NewListDialog
 import com.example.shoppinglist.fragments.FragmentManager
@@ -31,17 +33,21 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
     private var iAd: InterstitialAd? = null //lesson 57
     private var adShowCounter = 0
     private var adShowCounterMax = 3
+    private lateinit var pref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
         setTheme(getSelectedTheme()) //lesson 55
         super.onCreate(savedInstanceState)
+        pref = getSharedPreferences(BillingManager.MAIN_PREF, MODE_PRIVATE)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         currentTheme = defPref.getString("theme_key", "blue").toString() //lesson 56
         FragmentManager.setFragment(ShopListNamesFragment.newInstance(), this)
         setBottomNavListener()
-        loadInterAd()//lesson 57
+
+        if (!pref.getBoolean(BillingManager.REMOVE_ADS_KEY, false)) loadInterAd()//lesson 61
+
     }
 
     private fun loadInterAd() { //lesson 57
