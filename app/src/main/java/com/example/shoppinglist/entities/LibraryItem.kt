@@ -12,8 +12,5 @@ data class LibraryItem(
     val id: Int?,
 
     @ColumnInfo(name = "name") // название элемента в библиотеке
-    val name: String,
-
-    @ColumnInfo(name = "price", defaultValue = "") // название элемента в библиотеке
-    val price: String
+    val name: String
 )

@@ -44,8 +44,7 @@ class MainViewModel(database: MainDataBase) : ViewModel() {
         if (!isLibraryItemExists(shopListItem.name)) dao.insertLibraryItem( //lesson 44
             LibraryItem(
                 null,
-                shopListItem.name,
-                ""
+                shopListItem.name
             )
         )
     }

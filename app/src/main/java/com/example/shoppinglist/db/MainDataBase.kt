@@ -1,10 +1,8 @@
 package com.example.shoppinglist.db
 
 import android.content.Context
-import androidx.room.AutoMigration
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
+import androidx.room.migration.AutoMigrationSpec
 import com.example.shoppinglist.entities.*
 
 @Database(
@@ -12,13 +10,16 @@ import com.example.shoppinglist.entities.*
         LibraryItem::class,
         NoteItem::class,
         ShopListItem::class,
-        ShopListNameItem::class,
-        TestItem::class,
-        TestItemTwo::class],
-    version = 4, exportSchema = true, autoMigrations = [AutoMigration(from = 3, to = 4)]
+        ShopListNameItem::class],
+    version = 7,
+    exportSchema = true,
+    autoMigrations = [AutoMigration(from = 6, to = 7, spec = MainDataBase.SpecMigration::class)]
 )
 
 abstract class MainDataBase : RoomDatabase() {
+
+    @DeleteTable(tableName = "test_two")
+    class SpecMigration : AutoMigrationSpec
 
     abstract fun getDao(): Dao // для получения доступа к интерфейсу Dao
 

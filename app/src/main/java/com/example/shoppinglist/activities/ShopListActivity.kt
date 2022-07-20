@@ -254,7 +254,7 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     private fun editLibraryItem(item: ShopListItem) {
         EditListItemDialog.showDialog(this, item, object : EditListItemDialog.Listener {
             override fun onClick(item: ShopListItem) {
-                mainViewModel.updateLibraryItem(LibraryItem(item.id, item.name, ""))
+                mainViewModel.updateLibraryItem(LibraryItem(item.id, item.name,))
                 mainViewModel.getAllLibraryItems("%${edItem?.text.toString()}%")
             }
         })
