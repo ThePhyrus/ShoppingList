@@ -4,10 +4,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "library")
+@Entity(tableName = "test_two")
 
 // мини-библитека для хранения названий ранее вводимых пользователем
-data class LibraryItem(
+data class TestItemTwo(
     @PrimaryKey(autoGenerate = true) // автогенерация id
     val id: Int?,
 

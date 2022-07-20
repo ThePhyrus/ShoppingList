@@ -1,21 +1,21 @@
 package com.example.shoppinglist.db
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.shoppinglist.entities.LibraryItem
-import com.example.shoppinglist.entities.NoteItem
-import com.example.shoppinglist.entities.ShopListItem
-import com.example.shoppinglist.entities.ShopListNameItem
+import com.example.shoppinglist.entities.*
 
 @Database(
     entities = [
         LibraryItem::class,
         NoteItem::class,
         ShopListItem::class,
-        ShopListNameItem::class],
-    version = 1
+        ShopListNameItem::class,
+        TestItem::class,
+        TestItemTwo::class],
+    version = 4, exportSchema = true, autoMigrations = [AutoMigration(from = 3, to = 4)]
 )
 
 abstract class MainDataBase : RoomDatabase() {
