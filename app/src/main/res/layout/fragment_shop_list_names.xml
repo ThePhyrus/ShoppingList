@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mr_background_color_gray"
+    android:background="?attr/colorPrimary"
     tools:context=".fragments.ShopListNamesFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout

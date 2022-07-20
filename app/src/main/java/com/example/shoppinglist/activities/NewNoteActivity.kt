@@ -35,10 +35,10 @@ class NewNoteActivity : AppCompatActivity() {
     private lateinit var defPref: SharedPreferences //lesson 55
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityNewNoteBinding.inflate(layoutInflater)
         defPref = PreferenceManager.getDefaultSharedPreferences(this) //lesson 55
         setTheme(getSelectedTheme()) //lesson 55
+        super.onCreate(savedInstanceState)
+        binding = ActivityNewNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
         actionBarSettings()
         init()
