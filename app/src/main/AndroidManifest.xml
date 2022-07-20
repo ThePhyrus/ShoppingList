@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.shoppinglist">
+    package="com.thephyrus.shoppinglist">
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -23,7 +23,7 @@
             android:theme="@style/Theme.NewNoteBlue"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.thephyrus.shoppinglist.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
