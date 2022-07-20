@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--MARGIN-->
-    <dimen name="margin">8dp</dimen>
-    <dimen name="margin_half">4dp</dimen>
-    <dimen name="margin_double">16dp</dimen>
-    <dimen name="margin_mini">2dp</dimen>
     <dimen name="margin_line">1dp</dimen>
+    <dimen name="margin_mini">2dp</dimen>
+    <dimen name="margin_half">4dp</dimen>
+    <dimen name="margin">8dp</dimen>
+    <dimen name="margin_double">16dp</dimen>
     <!--PADDING-->
-    <dimen name="padding">8dp</dimen>
-    <dimen name="padding_half">4dp</dimen>
-    <dimen name="padding_double">16dp</dimen>
+    <dimen name="padding_line">1dp</dimen>
     <dimen name="padding_mini">2dp</dimen>
-    <dimen name="padding_line">8dp</dimen>
+    <dimen name="padding_half">4dp</dimen>
+    <dimen name="padding">8dp</dimen>
+    <dimen name="padding_double">16dp</dimen>
     <!--RADIUS-->
-    <dimen name="radius">8dp</dimen>
+    <dimen name="radius_mini">2dp</dimen>
     <dimen name="radius_half">4dp</dimen>
+    <dimen name="radius">8dp</dimen>
     <dimen name="radius_double">16dp</dimen>
-    <dimen name="radius_mini">4dp</dimen>
     <dimen name="radius_45">45dp</dimen>
     <dimen name="radius_90">90dp</dimen>
     <!--TEXT-->
-    <dimen name="text_size">16sp</dimen>
-    <dimen name="text_size_half">8sp</dimen>
-    <dimen name="text_size_double">16sp</dimen>
-    <dimen name="text_size_mini">4sp</dimen>
+    <dimen name="text_size_8">8sp</dimen>
+    <dimen name="text_size_10">10sp</dimen>
+    <dimen name="text_size_12">12sp</dimen>
+    <dimen name="text_size_14">14sp</dimen>
+    <dimen name="text_size_16">16sp</dimen>
+    <dimen name="text_size_18">18sp</dimen>
+    <dimen name="text_size_20">20sp</dimen>
+    <dimen name="text_size_22">22sp</dimen>
+    <dimen name="text_size_24">24sp</dimen>
 
     <dimen name="date_indication_text_size">12sp</dimen>
     <dimen name="list_title_text_size">16sp</dimen>
     <dimen name="progress_counter_text_size">16sp</dimen>
     <dimen name="min_height">48dp</dimen>
+    <dimen name="empty_list_text_size">24sp</dimen>
+    <dimen name="line_1dp">1dp</dimen>
 </resources>

@@ -33,7 +33,7 @@ class SettingsActivity : AppCompatActivity() { //lesson 51
         return if (defPref.getString("theme_key", "blue") == "blue") {
             R.style.Theme_ShoppingListBlue
         } else {
-            R.style.Theme_ShoppingListContrast
+            R.style.Theme_ShoppingListRed
         }
     }
 }

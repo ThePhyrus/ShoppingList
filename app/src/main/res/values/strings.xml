@@ -44,6 +44,17 @@
     <string name="remove_ads_button_is_pressed">Remove ads button is pressed</string>
     <string name="thank_you_for_your_money">Thank you for your money</string>
     <string name="purchase_is_failed">Purchase is failed</string>
+    <string name="empty_list">Empty list</string>
+    <string name="new_item_hint">New item</string>
+    <string name="update_list_item">Update list item</string>
+    <string name="name">name</string>
+    <string name="item_info">item info</string>
+    <string name="update_item">Update item</string>
+    <string name="shop_list_fragment">Shop list fragment</string>
+    <string name="list_title_is_empty">List title is empty</string>
+    <string name="no_description">No description</string>
+    <string name="_0_0">0/0</string>
+    <string name="textview">TextView</string>
 
 
 </resources>

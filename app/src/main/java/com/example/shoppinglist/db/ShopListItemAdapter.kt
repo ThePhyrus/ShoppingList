@@ -9,10 +9,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
-import com.example.shoppinglist.databinding.ListNameItemBinding
 import com.example.shoppinglist.databinding.ShopLibraryListItemBinding
 import com.example.shoppinglist.databinding.ShopListItemBinding
-import com.example.shoppinglist.entities.ShopListNameItem
 import com.example.shoppinglist.entities.ShopListItem
 
 // Этот класс создавался на 33-м уроке.
@@ -77,8 +75,8 @@ class ShopListItemAdapter(private val listener: Listener) :
                 if (chBox.isChecked){
                     tvName.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                     tvInfo.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-                    tvName.setTextColor(ContextCompat.getColor(binding.root.context, R.color.mr_gray))
-                    tvInfo.setTextColor(ContextCompat.getColor(binding.root.context, R.color.mr_gray))
+                    tvName.setTextColor(ContextCompat.getColor(binding.root.context, R.color.mr_text_color_gray))
+                    tvInfo.setTextColor(ContextCompat.getColor(binding.root.context, R.color.mr_text_color_gray))
                 } else {
                     tvName.paintFlags = Paint.ANTI_ALIAS_FLAG
                     tvInfo.paintFlags = Paint.ANTI_ALIAS_FLAG

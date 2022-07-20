@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mr_black"
     tools:context=".activities.NewNoteActivity">
 
     <androidx.cardview.widget.CardView
@@ -27,7 +26,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint= "@string/note_title_hint"
+                android:hint="@string/note_title_hint"
                 android:inputType="textMultiLine|textPersonName"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -53,13 +52,13 @@
 
     <LinearLayout
         android:id="@+id/colorPicker"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#DFDFDF"
         android:elevation="10dp"
         android:orientation="horizontal"
         android:padding="3dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

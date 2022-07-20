@@ -23,6 +23,10 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
+//TODO настроить цвета в edit_action_layout (сайт material.io)
+
+
+
 
 class MainActivity : AppCompatActivity(), NewListDialog.Listener {
 
@@ -137,7 +141,7 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
         return if (defPref.getString("theme_key", "blue") == "blue") {
             R.style.Theme_ShoppingListBlue
         } else {
-            R.style.Theme_ShoppingListContrast
+            R.style.Theme_ShoppingListRed
         }
     }
 

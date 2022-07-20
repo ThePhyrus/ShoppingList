@@ -245,7 +245,7 @@ class NewNoteActivity : AppCompatActivity() {
         return if (defPref.getString("theme_key", "blue") == "blue") {
             R.style.Theme_NewNoteBlue
         } else {
-            R.style.Theme_NewNoteContrast
+            R.style.Theme_NewNoteRed
         }
     }
 
