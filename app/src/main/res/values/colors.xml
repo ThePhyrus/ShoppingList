@@ -34,6 +34,11 @@
     <color name="mr_progress_bar_red">#BC0202</color>
 
 
-    <color name="mr_background_color_gray">#AAAAAA</color>
+    <color name="mr_background_color_blue">#40D9FF</color>
+    <color name="mr_background_color_red">#FA9292</color>
     <color name="mr_line_color">#B60000</color>
+
+
+    <color name="mr_settings_icon_color_black">#000000</color>
+    <color name="mr_settings_icon_color_white">#FFFFFF</color>
 </resources>
