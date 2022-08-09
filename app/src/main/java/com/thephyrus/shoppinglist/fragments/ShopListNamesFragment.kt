@@ -1,7 +1,6 @@
 package com.thephyrus.shoppinglist.fragments
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +8,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.thephyrus.shoppinglist.databinding.FragmentShopListNamesBinding
 import com.thephyrus.shoppinglist.activities.MainApp
-import com.thephyrus.shoppinglist.activities.ShopListActivity
+import com.thephyrus.shoppinglist.databinding.FragmentShopListNamesBinding
 import com.thephyrus.shoppinglist.db.MainViewModel
 import com.thephyrus.shoppinglist.db.ShopListNameAdapter
 import com.thephyrus.shoppinglist.dialogs.DeleteDialog
@@ -107,9 +105,7 @@ class ShopListNamesFragment : BaseFragment(), ShopListNameAdapter.Listener {
     }
 
     override fun onClickItem(shopListNameItem: ShopListNameItem) {
-        val i = Intent(activity, ShopListActivity::class.java).apply {
-            putExtra(ShopListActivity.SHOP_LIST_NAME, shopListNameItem)
-        }
-        startActivity(i)
+        mainViewModel.shopListNameItemUpdate.value = shopListNameItem
+        FragmentManager.setFragment(ShopListFragment(), activity as AppCompatActivity)
     }
 }

@@ -1,26 +1,32 @@
 package com.thephyrus.shoppinglist.activities
 
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
-import com.thephyrus.shoppinglist.R
-import com.thephyrus.shoppinglist.databinding.ActivityMainBinding
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.thephyrus.shoppinglist.R
 import com.thephyrus.shoppinglist.billing.BillingManager
+import com.thephyrus.shoppinglist.databinding.ActivityMainBinding
 import com.thephyrus.shoppinglist.dialogs.NewListDialog
 import com.thephyrus.shoppinglist.fragments.FragmentManager
 import com.thephyrus.shoppinglist.fragments.NoteFragment
+import com.thephyrus.shoppinglist.fragments.ShopListFragment
 import com.thephyrus.shoppinglist.fragments.ShopListNamesFragment
-import com.thephyrus.shoppinglist.settings.SettingsActivity
+import com.thephyrus.shoppinglist.settings.SettingsFragment
+//FIXME
+// 1 - Тема должна применяться сразу
+// 2 - Добавить возможность удаления елментов из списка покупок по отдельности
+// 3 - Что вообще за дизаин такой?!
+// 4 - Навигация - отстой
+// 5 - ...
 
 
 class MainActivity : AppCompatActivity(), NewListDialog.Listener {
@@ -46,7 +52,6 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
         setBottomNavListener()
 
         if (!pref.getBoolean(BillingManager.REMOVE_ADS_KEY, false)) loadInterAd()//lesson 61
-
     }
 
     private fun loadInterAd() { //lesson 57
@@ -102,11 +107,7 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
                     showInterAd(object :
                         AdListener { //lesson 57
                         override fun onFinish() {
-                            startActivity(
-                                Intent(
-                                    this@MainActivity, SettingsActivity::class.java
-                                )
-                            )
+                            FragmentManager.openSettings(SettingsFragment(), this@MainActivity)
                         }
                     })
                 }
@@ -142,6 +143,7 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
         }
     }
 
+
     override fun onResume() {
         super.onResume()
         binding.bNav.selectedItemId = currentMenuItemId
@@ -154,5 +156,14 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
 
     interface AdListener {
         fun onFinish()
+    }
+
+    override fun onBackPressed() {
+        if (FragmentManager.currentFrag is ShopListFragment || FragmentManager.currentFrag == null) {
+            FragmentManager.setFragment(ShopListNamesFragment.newInstance(), this)
+            binding.bNav.selectedItemId = R.id.shop_list
+        } else {
+            super.onBackPressed()
+        }
     }
 }

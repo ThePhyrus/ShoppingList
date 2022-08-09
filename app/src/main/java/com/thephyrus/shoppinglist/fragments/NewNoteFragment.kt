@@ -1,44 +1,62 @@
-package com.thephyrus.shoppinglist.activities
+package com.thephyrus.shoppinglist.fragments
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
-import android.view.ActionMode
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.preference.PreferenceManager
 import com.thephyrus.shoppinglist.R
+import com.thephyrus.shoppinglist.activities.MainApp
 import com.thephyrus.shoppinglist.databinding.ActivityNewNoteBinding
+import com.thephyrus.shoppinglist.db.MainViewModel
 import com.thephyrus.shoppinglist.entities.NoteItem
-import com.thephyrus.shoppinglist.fragments.NoteFragment
 import com.thephyrus.shoppinglist.utils.HtmlManager
 import com.thephyrus.shoppinglist.utils.MyTouchListener
 import com.thephyrus.shoppinglist.utils.TimeManager
-import java.util.*
 
-class NewNoteActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityNewNoteBinding
+class NewNoteFragment: BaseFragment() {
+
+    private var _binding: ActivityNewNoteBinding? = null
+    private val binding: ActivityNewNoteBinding get() = _binding!!
     private var note: NoteItem? = null
     private var pref: SharedPreferences? = null
     private lateinit var defPref: SharedPreferences //lesson 55
 
+    private val mainViewModel: MainViewModel by activityViewModels {
+        MainViewModel.MainViewModelFactory((context?.applicationContext as MainApp).database)
+    }
+
+    override fun onClickNew() {
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        defPref = PreferenceManager.getDefaultSharedPreferences(this) //lesson 55
-        setTheme(getSelectedTheme()) //lesson 55
         super.onCreate(savedInstanceState)
-        binding = ActivityNewNoteBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = ActivityNewNoteBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        defPref = PreferenceManager.getDefaultSharedPreferences(activity) //lesson 55
         actionBarSettings()
         init()
         setRazmerTexta() //todo осознать и переименовать:) См.урок №52
@@ -46,6 +64,7 @@ class NewNoteActivity : AppCompatActivity() {
         onClickColorPicker()
         actionMenuCallback() //FIXME action menu всё равно появляется, если нажать на свободное место?
     }
+
 
     private fun onClickColorPicker() = with(binding) {
         imbRed.setOnClickListener {
@@ -71,13 +90,12 @@ class NewNoteActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     private fun init() {
         binding.colorPicker.setOnTouchListener(MyTouchListener())
-        pref = PreferenceManager.getDefaultSharedPreferences(this) //lesson 52
+        pref = PreferenceManager.getDefaultSharedPreferences(activity) //lesson 52
     }
 
     private fun getNote() {
-        val serialisedNote = intent.getSerializableExtra(NoteFragment.NEW_NOTE_KEY)
-        if (serialisedNote != null) {
-            note = serialisedNote as NoteItem
+        mainViewModel.noteUpdate.observe(viewLifecycleOwner){
+            note = it
             fillNote()
         }
     }
@@ -87,16 +105,15 @@ class NewNoteActivity : AppCompatActivity() {
         edDescription.setText(HtmlManager.getFromHtml(note?.content!!))
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.new_note_menu, menu)
-        return super.onCreateOptionsMenu(menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.new_note_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.id_save) {
-            setMainResult()
+            saveUpdateNote()
         } else if (item.itemId == android.R.id.home) {
-            finish()
+            FragmentManager.setFragment(NoteFragment.newInstance(), activity as AppCompatActivity)
         } else if (item.itemId == R.id.id_bold) {
             setBoldForSelectedText()
         } else if (item.itemId == R.id.id_color) {
@@ -132,7 +149,7 @@ class NewNoteActivity : AppCompatActivity() {
         if (styles.isNotEmpty()) edDescription.text.removeSpan(styles[0])
         edDescription.text.setSpan(
             ForegroundColorSpan(
-                ContextCompat.getColor(this@NewNoteActivity, colorId)
+                ContextCompat.getColor(activity as AppCompatActivity, colorId)
             ),
             startPos, endPos, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
@@ -140,54 +157,50 @@ class NewNoteActivity : AppCompatActivity() {
         edDescription.setSelection(endPos) //FIXME was startPos
     }
 
-    private fun setMainResult() {
-        var editState = "new"
-        val tempNote: NoteItem? = if (note == null) {
+    private fun saveUpdateNote() {
+        if (note == null) {
             createNewNote()
         } else {
-            editState = "update"
             updateNote()
         }
-        val i = Intent().apply {
-            putExtra(NoteFragment.NEW_NOTE_KEY, tempNote)
-            putExtra(NoteFragment.EDIT_STATE_KEY, editState)
+        FragmentManager.setFragment(NoteFragment.newInstance(), activity as AppCompatActivity)
 
-        }
-        setResult(RESULT_OK, i)
-        finish()
     }
 
-    private fun updateNote(): NoteItem? = with(binding) {
-        return note?.copy(
+    private fun updateNote()  = with(binding) {
+        val tempNote = note?.copy(
             title = edTitle.text.toString(),
             content = HtmlManager.toHtml(edDescription.text)
         )
+        if (tempNote != null) {
+            mainViewModel.updateNote(tempNote)
+        }
     }
 
-    private fun createNewNote(): NoteItem = with(binding) { // функция выдаёт заполненную заметку
-        return NoteItem(
-            null,
-            edTitle.text.toString(),
-            HtmlManager.toHtml(edDescription.text),
-            TimeManager.getCurrentTime(),
-            ""
-        )
+    private fun createNewNote()= with(binding) { // функция выдаёт заполненную заметку
+       mainViewModel.insertNote(NoteItem(
+           null,
+           edTitle.text.toString(),
+           HtmlManager.toHtml(edDescription.text),
+           TimeManager.getCurrentTime(),
+           ""
+       ))
     }
 
 
     private fun actionBarSettings() {
-        val ab = supportActionBar
+        val ab = (activity as AppCompatActivity).supportActionBar
         ab?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun openColorPicker() {
         binding.colorPicker.visibility = View.VISIBLE
-        val openAnim = AnimationUtils.loadAnimation(this, R.anim.open_color_picker)
+        val openAnim = AnimationUtils.loadAnimation(activity, R.anim.open_color_picker)
         binding.colorPicker.startAnimation(openAnim)
     }
 
     private fun closeColorPicker() {
-        val openAnim = AnimationUtils.loadAnimation(this, R.anim.close_color_picker)
+        val openAnim = AnimationUtils.loadAnimation(activity, R.anim.close_color_picker)
         openAnim.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {
 
@@ -240,12 +253,9 @@ class NewNoteActivity : AppCompatActivity() {
         edDescription.setTextSize(pref?.getString("content_text_size_key", "12"))
     }
 
-    private fun getSelectedTheme():Int{ //lesson 55
-        return if (defPref.getString("theme_key", "blue") == "blue") {
-            R.style.Theme_NewNoteBlue
-        } else {
-            R.style.Theme_NewNoteRed
-        }
-    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }

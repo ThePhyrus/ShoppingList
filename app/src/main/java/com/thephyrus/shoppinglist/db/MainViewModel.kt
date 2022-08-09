@@ -18,6 +18,9 @@ class MainViewModel(database: MainDataBase) : ViewModel() {
 
     val libraryItems = MutableLiveData<List<LibraryItem>>() //lesson 45
 
+    val noteUpdate = MutableLiveData<NoteItem>()
+    val shopListNameItemUpdate = MutableLiveData<ShopListNameItem>()
+
     // если список обновится, то обновится и allNotes
     val allNotes: LiveData<List<NoteItem>> = dao.getAllNotes().asLiveData()
     val allShopListNames: LiveData<List<ShopListNameItem>> = dao.getAllShopListNames().asLiveData()

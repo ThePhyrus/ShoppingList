@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import com.thephyrus.shoppinglist.R
 
+/*
 class SettingsActivity : AppCompatActivity() { //lesson 51
 
     private lateinit var defPref: SharedPreferences
@@ -36,4 +37,4 @@ class SettingsActivity : AppCompatActivity() { //lesson 51
             R.style.Theme_ShoppingListRed
         }
     }
-}
+}*/

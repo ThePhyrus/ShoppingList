@@ -12,17 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShoppingListBlue">
         <activity
-            android:name=".settings.SettingsActivity"
-            android:exported="true" />
-        <activity
-            android:name=".activities.ShopListActivity"
-            android:exported="true" />
-        <activity
-            android:name=".activities.NewNoteActivity"
-            android:exported="true"
-            android:theme="@style/Theme.NewNoteBlue"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity
             android:name="com.thephyrus.shoppinglist.activities.MainActivity"
             android:exported="true">
             <intent-filter>

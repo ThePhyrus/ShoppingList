@@ -1,6 +1,7 @@
 package com.thephyrus.shoppinglist.fragments
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.thephyrus.shoppinglist.R
 
 
@@ -35,5 +36,18 @@ object FragmentManager {
         transaction.replace(R.id.placeHolder, newFrag) // указатель места, куда поместить фрагмент
         transaction.commit() // подтвердить транзакцию (без этого счастья не будет)
         currentFrag = newFrag // помещаем новый фрагмент в currentFrag
+    }
+
+    fun openSettings(newFrag: Fragment, activity: AppCompatActivity) {
+
+        /*
+        При помощи этой функции открывается фрагмент с настройками. Аргументами функции
+        будут новый фрагмент, который нужно поместить в активити и контекст этой активити.
+         */
+
+        val transaction = activity.supportFragmentManager.beginTransaction() //переключает фрагменты
+        transaction.replace(R.id.placeHolder, newFrag) // указатель места, куда поместить фрагмент
+        transaction.commit() // подтвердить транзакцию (без этого счастья не будет)
+        currentFrag = null // НЕ помещаем новый фрагмент в currentFrag
     }
 }

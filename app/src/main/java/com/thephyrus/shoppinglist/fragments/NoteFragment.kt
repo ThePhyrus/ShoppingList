@@ -1,6 +1,5 @@
 package com.thephyrus.shoppinglist.fragments
 
-import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -8,15 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.thephyrus.shoppinglist.databinding.FragmentNoteBinding
 import com.thephyrus.shoppinglist.activities.MainApp
-import com.thephyrus.shoppinglist.activities.NewNoteActivity
+import com.thephyrus.shoppinglist.databinding.FragmentNoteBinding
 import com.thephyrus.shoppinglist.db.MainViewModel
 import com.thephyrus.shoppinglist.db.NoteAdapter
 import com.thephyrus.shoppinglist.entities.NoteItem
@@ -38,12 +36,7 @@ class NoteFragment : BaseFragment(), NoteAdapter.Listener {
     }
 
     override fun onClickNew() {
-        editLauncher.launch(Intent(activity, NewNoteActivity::class.java))
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        onEditResult()
+        FragmentManager.setFragment(NewNoteFragment(), activity as AppCompatActivity)
     }
 
     override fun onCreateView(
@@ -56,6 +49,7 @@ class NoteFragment : BaseFragment(), NoteAdapter.Listener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         initRcView()
         observer()
 
@@ -82,31 +76,14 @@ class NoteFragment : BaseFragment(), NoteAdapter.Listener {
         }
     }
 
-    private fun onEditResult() {
-        editLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                val editState = it.data?.getStringExtra(EDIT_STATE_KEY)
-                if (editState == "update") {
-                    mainViewModel.updateNote(it.data?.getSerializableExtra(NEW_NOTE_KEY) as NoteItem)
-                } else {
-                    mainViewModel.insertNote(it.data?.getSerializableExtra(NEW_NOTE_KEY) as NoteItem)
-                }
-            }
-        }
-    }
-
 
     override fun deleteItem(id: Int) {
         mainViewModel.deleteNote(id)
     }
 
     override fun onClickItem(note: NoteItem) {
-        val intent = Intent(activity, NewNoteActivity::class.java).apply {
-            putExtra(NEW_NOTE_KEY, note)
-        }
-        editLauncher.launch(intent)
+    mainViewModel.noteUpdate.value = note
+        FragmentManager.setFragment(NewNoteFragment(), activity as AppCompatActivity)
     }
 
     companion object {

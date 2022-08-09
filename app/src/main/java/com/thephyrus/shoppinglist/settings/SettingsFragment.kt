@@ -32,6 +32,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
+    override fun onDetach() {
+        (activity as AppCompatActivity).recreate()
+        super.onDetach()
+    }
+
     override fun onDestroy() {
         bManager.closeConnection()
         super.onDestroy()
