@@ -22,11 +22,11 @@ import com.thephyrus.shoppinglist.fragments.ShopListFragment
 import com.thephyrus.shoppinglist.fragments.ShopListNamesFragment
 import com.thephyrus.shoppinglist.settings.SettingsFragment
 //FIXME
-// 1 - Тема должна применяться сразу
+// 1 - Тема должна применяться сразу. Исправить.
 // 2 - Добавить возможность удаления елментов из списка покупок по отдельности
-// 3 - Что вообще за дизаин такой?!
-// 4 - Навигация - отстой
-// 5 - ...
+// 3 - Переделать дизаин
+// 4 - Попробовать улучшить навигацию (урое 3 MaterialDesign)
+// 5 - Попробовать сделать какую-нибудь анимацию (урок 5 MaterialDesign)
 
 
 class MainActivity : AppCompatActivity(), NewListDialog.Listener {
